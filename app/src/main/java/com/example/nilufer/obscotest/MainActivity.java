@@ -10,6 +10,7 @@ import android.widget.*;
 public class MainActivity extends AppCompatActivity {
 private EditText passwordFieldInput, usernameFieldInput;
 private Button loginButton;
+
 public void LoginButton()
 {
         usernameFieldInput = (EditText)findViewById(R.id.editText1);
@@ -25,7 +26,11 @@ public void LoginButton()
                         //usernameFieldInput.getText().toString()
                         //MATCH WITH PASSWORD
                         //passwordFieldInput.getText().toString()
-                        Log.d("myTag", "This is my message");
+
+                        /////Log.d("myTag", "This is my message");
+                        String testString = "AAAAAAAATest";
+                        Toast.makeText(MainActivity.this, testString, Toast.LENGTH_LONG).show();
+
                         Intent intent = new Intent("android.intent.action.HOME");
                         startActivity(intent);
                 }
@@ -33,8 +38,12 @@ public void LoginButton()
 }
 
 @Override
-protected void onCreate(Bundle savedInstanceState) {
+protected void onCreate(Bundle savedInstanceState)
+        {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LoginButton();
+
         }
-        }
+
+}
