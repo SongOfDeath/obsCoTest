@@ -42,11 +42,14 @@
         android:id="@+id/editText1"
         android:layout_width="164dp"
         android:layout_height="34dp"
+        android:layout_marginStart="142dp"
+        android:layout_marginLeft="142dp"
+        android:layout_marginTop="179dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        tools:layout_editor_absoluteX="142dp"
-        tools:layout_editor_absoluteY="184dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <!--
             android:layout_width="386dp"
         android:layout_height="520dp"

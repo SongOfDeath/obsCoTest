@@ -30,7 +30,6 @@
             android:textStyle="bold" />
 
 
-
         <LinearLayout
 
             android:id="@+id/fullscreen_content_controls1"
@@ -38,33 +37,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
-            android:background="@color/black_overlay"
+
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
 
             <Button
                 android:id="@+id/profile_button"
-                style="?metaButtonBarButtonStyle"
+
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_weight="1"
+                android:background="@drawable/testbutton1"
                 android:text="Profilim" />
 
             <Button
                 android:id="@+id/grouppage_button"
-                style="?metaButtonBarButtonStyle"
+
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_weight="1"
+                android:background="@drawable/testbutton1"
                 android:text="Gruplarim" />
-            
+
             <Button
                 android:id="@+id/reportbug_button"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_weight="1"
+                android:background="@drawable/testbutton1"
                 android:text="Hata bildir" />
 
             <Button
@@ -73,8 +75,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_weight="1"
+                android:background="@drawable/testbutton1"
                 android:text="Ayarlar" />
-
 
 
         </LinearLayout>
@@ -87,16 +89,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             tools:ignore="UselessParent">
-
 
 
             <Button
                 android:id="@+id/dummy_button"
                 style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:text="@string/dummy_button" />
+
+            <Button
+                android:id="@+id/test1"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 android:text="@string/dummy_button" />
 
