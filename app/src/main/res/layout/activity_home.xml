@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:keepScreenOn="true"
-            android:text="ASDSADSA"
+            android:text="OBSCO"
             android:textColor="#33b5e5"
             android:textSize="50sp"
             android:textStyle="bold" />
@@ -44,20 +44,36 @@
 
 
             <Button
-                android:id="@+id/dummy_button1"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
-
-            <Button
-                android:id="@+id/dummy_button2"
+                android:id="@+id/profile_button"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:text="@string/dummy_button" />
+                android:text="Profilim" />
+
+            <Button
+                android:id="@+id/grouppage_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:text="Gruplarim" />
+            
+            <Button
+                android:id="@+id/reportbug_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:text="Hata bildir" />
+
+            <Button
+                android:id="@+id/settingspage_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:text="Ayarlar" />
 
 
 
