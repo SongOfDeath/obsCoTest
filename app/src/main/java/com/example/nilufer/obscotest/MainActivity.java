@@ -31,6 +31,7 @@ public void LoginButton()
                         String testString = "AAAAAAAATest";
                         Toast.makeText(MainActivity.this, testString, Toast.LENGTH_LONG).show();
 
+                        //Open new page
                         Intent intent = new Intent("android.intent.action.HOME");
                         startActivity(intent);
                 }
