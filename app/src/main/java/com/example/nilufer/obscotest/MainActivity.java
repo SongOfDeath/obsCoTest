@@ -9,13 +9,13 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
 private EditText passwordFieldInput, usernameFieldInput;
-private Button loginButton;
+private ImageButton loginButton;
 
 public void LoginButton()
 {
         usernameFieldInput = (EditText)findViewById(R.id.editText1);
         passwordFieldInput = (EditText)findViewById(R.id.password1);
-        loginButton = (Button)findViewById(R.id.button);
+        loginButton = (ImageButton)findViewById(R.id.button);
 
         loginButton.setOnClickListener(new View.OnClickListener()
         {

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profilePage1">
+
+    <LinearLayout
+
+        android:id="@+id/fullscreen_bot"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="top|center_horizontal"
+        android:background="#3F4996"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UselessParent"
+        tools:layout_editor_absoluteX="0dp">
+
+
+        <ImageView
+            android:id="@+id/profile_pic"
+
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:src="@drawable/bertcase" />
+
+        <TextView
+            android:id="@+id/personnel_title"
+
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+            android:text="Cumali Kocovali"
+            android:textColor="#FFFFFF"
+            android:src="@drawable/geributton1" />
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@id/completed_projects"
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="top|center_horizontal"
+        android:background="#3F4996"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/fullscreen_bot"
+        tools:ignore="UselessParent"
+        tools:layout_editor_absoluteX="91dp">
+
+
+        <TextView
+            android:id="@+id/completed_projects"
+
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#4DC2FF"
+            android:text="Total Projects \n12"
+            android:textColor="#FFFFFF"
+             />
+
+        <TextView
+            android:id="@+id/behavior_score"
+
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF7FE5"
+            android:layout_weight="1"
+            android:text="Behavior Score"
+            android:textColor="#FFFFFF"
+            android:src="@drawable/geributton1" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
