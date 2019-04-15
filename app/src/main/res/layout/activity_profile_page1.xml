@@ -44,7 +44,7 @@
 
     <LinearLayout
 
-        android:id="@id/completed_projects"
+        android:id="@+id/traits_layout"
         style="?metaButtonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="200dp"

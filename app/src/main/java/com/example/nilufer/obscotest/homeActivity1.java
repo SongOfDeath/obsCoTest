@@ -27,11 +27,11 @@ private Button gruplarimButton;
                 //passwordFieldInput.getText().toString()
 
                 /////Log.d("myTag", "This is my message");
-                String testString = "AAAAAAAATest";
+                String testString = "profil button clicked";
                 Toast.makeText(homeActivity1.this, testString, Toast.LENGTH_LONG).show();
 
                 //Open new page
-                Intent intent = new Intent("android.intent.action.HOME");
+                Intent intent = new Intent("android.intent.action.PROFILEPAGE");
                 startActivity(intent);
             }
         });
