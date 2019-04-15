@@ -87,7 +87,7 @@
         android:id="@+id/texts_layout"
 
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:background="#3F4996"
         android:orientation="vertical"
@@ -96,29 +96,6 @@
         tools:layout_editor_absoluteX="91dp">
 
 
-        <TextView
-            android:id="@+id/text2"
-
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#4DC2FF"
-            android:text="Total Projects \n12"
-            android:textColor="#FFFFFF"
-            />
-
-        <TextView
-            android:id="@+id/text3"
-
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FF7FE5"
-            android:layout_weight="1"
-            android:text="Behavior Score"
-            android:textColor="#FFFFFF"
-            android:src="@drawable/geributton1" />
 
     </LinearLayout>
 

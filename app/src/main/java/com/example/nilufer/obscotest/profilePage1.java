@@ -3,8 +3,12 @@ package com.example.nilufer.obscotest;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Random;
 
 public class profilePage1 extends AppCompatActivity {
 // MAHIR
@@ -23,9 +27,24 @@ public class profilePage1 extends AppCompatActivity {
             final TextView rowTextView = new TextView(this);
 
             // set some properties of rowTextView or something
-            rowTextView.setText("This is row #" + i);
-            rowTextView.setBackgroundColor( Color.parseColor("#4DC2FF") );
+            rowTextView.setText("Personel yetenegi #" + i);
+
+
+            Random rnd = new Random();
+            int randomColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+            rowTextView.setBackgroundColor( randomColor );
+            rowTextView.setTextAppearance(this, R.style.Widget_AppCompat_Button_Borderless);
+            rowTextView.setGravity(Gravity.CENTER);
+            rowTextView.setMinimumHeight(175);
+            /**
+            //if we already have layout params
+            ViewGroup.LayoutParams params = rowTextView.getLayoutParams();
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            rowTextView.setLayoutParams(params);
+            */
             // add the textview to the linearlayout
+            rowTextView.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             ll.addView(rowTextView);
 
             // save a reference to the textview for later
