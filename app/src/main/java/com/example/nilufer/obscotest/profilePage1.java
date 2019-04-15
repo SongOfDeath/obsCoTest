@@ -1,10 +1,15 @@
 package com.example.nilufer.obscotest;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,10 +37,11 @@ public class profilePage1 extends AppCompatActivity {
 
             Random rnd = new Random();
             int randomColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-            rowTextView.setBackgroundColor( randomColor );
+            rowTextView.setBackgroundColor( Color.argb(255,255,255,255) );
             rowTextView.setTextAppearance(this, R.style.Widget_AppCompat_Button_Borderless);
             rowTextView.setGravity(Gravity.CENTER);
             rowTextView.setMinimumHeight(175);
+
             /**
             //if we already have layout params
             ViewGroup.LayoutParams params = rowTextView.getLayoutParams();
@@ -51,6 +57,21 @@ public class profilePage1 extends AppCompatActivity {
             myTextViews[i] = rowTextView;
         }
     }
+
+    public void makeProfilePicCircular()
+    {
+        ImageView profilePic=(ImageView)findViewById(R.id.profile_pic);
+
+//get bitmap of the image
+        Bitmap imageBitmap= BitmapFactory.decodeResource(getResources(),  R.drawable.bertcase);
+        RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
+
+//setting radius
+        //roundedBitmapDrawable.setCornerRadius(50.0f);
+        roundedBitmapDrawable.setCircular(true);
+        roundedBitmapDrawable.setAntiAlias(true);
+        profilePic.setImageDrawable(roundedBitmapDrawable);
+    }
 // MAHIR
 
 
@@ -63,6 +84,7 @@ public class profilePage1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page1);
 
+        makeProfilePicCircular();
         addUserTraits();
     }
 }

@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".profilePage1">
 
+
+
     <LinearLayout
 
         android:id="@+id/fullscreen_bot"
@@ -37,9 +39,9 @@
             android:layout_height="match_parent"
 
             android:layout_weight="1"
+            android:src="@drawable/geributton1"
             android:text="Cumali Kocovali"
-            android:textColor="#FFFFFF"
-            android:src="@drawable/geributton1" />
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,8 +67,7 @@
             android:layout_weight="1"
             android:background="#4DC2FF"
             android:text="Total Projects \n12"
-            android:textColor="#FFFFFF"
-             />
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/behavior_score"
@@ -74,11 +75,11 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FF7FE5"
             android:layout_weight="1"
+            android:background="#FF7FE5"
+            android:src="@drawable/geributton1"
             android:text="Behavior Score"
-            android:textColor="#FFFFFF"
-            android:src="@drawable/geributton1" />
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
@@ -96,7 +97,25 @@
         tools:layout_editor_absoluteX="91dp">
 
 
-
     </LinearLayout>
+
+    <ImageButton
+        android:layout_width="224dp"
+        android:layout_height="222dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:src="@drawable/addbutton1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.176" />
 
 </android.support.constraint.ConstraintLayout>
