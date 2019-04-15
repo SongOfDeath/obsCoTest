@@ -1,5 +1,6 @@
 package com.example.nilufer.obscotest;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -9,11 +10,11 @@ public class profilePage1 extends AppCompatActivity {
 // MAHIR
     public void addUserTraits()
     {
-        LinearLayout ll = (LinearLayout)findViewById(R.id.traits_layout);
+        LinearLayout ll = (LinearLayout)findViewById(R.id.texts_layout);
         //LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         //ll.addView(myButton, lp);
 
-        final int N = 10; // total number of textviews to add
+        final int N = 5; // total number of textviews to add
 
         final TextView[] myTextViews = new TextView[N]; // create an empty array;
 
@@ -23,7 +24,7 @@ public class profilePage1 extends AppCompatActivity {
 
             // set some properties of rowTextView or something
             rowTextView.setText("This is row #" + i);
-
+            rowTextView.setBackgroundColor( Color.parseColor("#4DC2FF") );
             // add the textview to the linearlayout
             ll.addView(rowTextView);
 
@@ -42,5 +43,7 @@ public class profilePage1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page1);
+
+        addUserTraits();
     }
 }
