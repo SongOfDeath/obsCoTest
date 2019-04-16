@@ -27,7 +27,7 @@ static Socket socket = null;
     // HTTP GET request
     private void sendingGetRequest() throws Exception {
 
-        String urlString = "http://localhost:8080/JAXRSJsonCRUDExample/rest/countries";
+        String urlString = "http://127.0.0.1:5000/obsco/api/v1.0/users";
 
         URL url = new URL(urlString);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -40,7 +40,7 @@ static Socket socket = null;
 
         int responseCode = con.getResponseCode();
         System.out.println("Sending get request : "+ url);
-        System.out.println("Response code : "+ responseCode);
+        //System.out.println("Response code : "+ responseCode);
 
         /**
         // Reading response from input Stream
