@@ -32,7 +32,7 @@ public class profilePage1 extends AppCompatActivity {
             final TextView rowTextView = new TextView(this);
 
             // set some properties of rowTextView or something
-            rowTextView.setText("Personel yetenegi #" + i);
+            rowTextView.setText("Personel teknik yetenek #" + i);
 
 
             Random rnd = new Random();
