@@ -123,18 +123,21 @@ Thread thread = new Thread(new Runnable() {
 
     private void sendGet() throws Exception {
 
-        String url = "mongodb://127.0.0.1:29618/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        System.out.println("DEBUG POINT 1: ");
+        String url = "https://134.209.252.146"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
+        System.out.println("DEBUG POINT 2: ");
         // optional default is GET
         con.setRequestMethod("GET");
-
+        System.out.println("DEBUG POINT 3: ");
         //add request header
         //con.setRequestProperty("User-Agent",);
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
 
         int responseCode = con.getResponseCode();
+        System.out.println("DEBUG POINT 4: ");
         System.out.println("\nSending 'GET' request to URL : " + url);
         System.out.println("Response Code : " + responseCode);
 
@@ -149,6 +152,7 @@ Thread thread = new Thread(new Runnable() {
         in.close();
 
         //print result
+        System.out.println("RESPONSE: ");
         System.out.println(response.toString());
 
     }
@@ -223,7 +227,7 @@ Thread thread = new Thread(new Runnable() {
             System.out.println("PROFIL ERROR");
         }
 
-        //new ConnectionTest().execute("");
+        new ConnectionTest().execute("");
 
 
 /*
