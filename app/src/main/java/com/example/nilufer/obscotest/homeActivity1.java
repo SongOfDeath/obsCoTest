@@ -1,6 +1,10 @@
 package com.example.nilufer.obscotest;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,12 +22,46 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 
+
+
 public class homeActivity1 extends AppCompatActivity {
 // MAHIR
 private Button profilButton;
 private Button gruplarimButton;
 static Socket socket = null;
 
+    private class ConnectionTest extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object... arg0) {
+
+            try{
+                System.out.println("Testing 1 - Send Http GET request");
+                sendGet();
+
+            } catch (Exception e) {
+                System.err.println("Oops!");
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+/*
+Thread thread = new Thread(new Runnable() {
+
+    @Override
+    public void run() {
+        try  {
+            System.out.println("THREAD WORKING AFTER 5 SECS");
+            sendingGetRequest();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+});
+    */
+
+    /**
     // HTTP GET request
     private void sendingGetRequest() throws Exception {
 
@@ -37,12 +75,35 @@ static Socket socket = null;
 
         //add request header
         con.setRequestProperty("User-Agent", "Mozilla/5.0");
+        System.out.println("POINT 1");
+        //PROBLEM AREA
+        //////////////
+        // Storage Permissions
+        final int REQUEST_EXTERNAL_STORAGE = 1;
+        String[] PERMISSIONS_STORAGE = {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission( this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    this,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+        System.out.println("BOING");
         int responseCode = con.getResponseCode();
+        //////////////
+        //PROBLEM AREA END
+        System.out.println("DOING DOING DOING");
         System.out.println("Sending get request : "+ url);
         //System.out.println("Response code : "+ responseCode);
 
-        /**
+
         // Reading response from input Stream
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -56,7 +117,40 @@ static Socket socket = null;
 
         //printing result from response
         System.out.println(response.toString());
-        */
+
+    }
+    */
+
+    private void sendGet() throws Exception {
+
+        String url = "mongodb://127.0.0.1:29618/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        // optional default is GET
+        con.setRequestMethod("GET");
+
+        //add request header
+        //con.setRequestProperty("User-Agent",);
+
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        //print result
+        System.out.println(response.toString());
+
     }
 
     public void InitializeProfilButton() throws UnknownHostException, IOException
@@ -129,12 +223,23 @@ static Socket socket = null;
             System.out.println("PROFIL ERROR");
         }
 
-        try {
-            sendingGetRequest();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("GET REQUEST ERROR");
+        //new ConnectionTest().execute("");
+
+
+/*
+        try
+        {
+            System.out.println("5 SANIYE ONCESI");
+            thread.sleep(5000);
+            System.out.println("5 SANIYE SONRASI");
+            thread.start();
         }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+*/
+
 
         InitializeGruplarimButton();
     }
