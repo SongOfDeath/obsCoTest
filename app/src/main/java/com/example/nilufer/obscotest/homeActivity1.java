@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,6 +32,13 @@ private Button profilButton;
 private Button gruplarimButton;
 static Socket socket = null;
 
+String age;
+String email;
+String id;
+String name;
+String password;
+String title;
+boolean isSuperuser;
     private class ConnectionTest extends AsyncTask {
         @Override
         protected Object doInBackground(Object... arg0) {
@@ -124,7 +133,7 @@ Thread thread = new Thread(new Runnable() {
     private void sendGet() throws Exception {
 
         System.out.println("DEBUG POINT 1: ");
-        String url = "https://134.209.252.146"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        String url = "http://obsco.me/obsco/api/v1.0/users/12345671"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -145,9 +154,11 @@ Thread thread = new Thread(new Runnable() {
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuffer response = new StringBuffer();
-
+        int cntTest1 = 0;
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
+            cntTest1++;
+            System.out.println(cntTest1);
         }
         in.close();
 
@@ -155,6 +166,17 @@ Thread thread = new Thread(new Runnable() {
         System.out.println("RESPONSE: ");
         System.out.println(response.toString());
 
+        JSONObject reader = new JSONObject(response.toString());
+
+        JSONObject userJSON  = reader.getJSONObject("user");
+        age = userJSON.getString("age");
+        email = userJSON.getString("email");
+        id = userJSON.getString("id");
+        name = userJSON.getString("name");
+        password = userJSON.getString("password");
+        title = userJSON.getString("title");
+        System.out.println("AGE: ");
+        System.out.println(age);
     }
 
     public void InitializeProfilButton() throws UnknownHostException, IOException
