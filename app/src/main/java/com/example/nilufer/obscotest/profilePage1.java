@@ -14,12 +14,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 
 public class profilePage1 extends AppCompatActivity {
@@ -30,6 +34,7 @@ public class profilePage1 extends AppCompatActivity {
     String name;
     String password;
     String title;
+    JSONArray skillsArray;
     boolean isSuperuser;
 
     private class ConnectionTest extends AsyncTask {
@@ -93,6 +98,14 @@ public class profilePage1 extends AppCompatActivity {
         name = userJSON.getString("name");
         password = userJSON.getString("password");
         title = userJSON.getString("title");
+
+        // getting phoneNumbers
+        skillsArray = (JSONArray) userJSON.get("skills");
+        System.out.println("JA LENGTH: ");
+        System.out.println(skillsArray.length());
+        //ja.getJSONObject(i)
+        // iterating phoneNumbers
+
         System.out.println("AGE: ");
         System.out.println(age);
 
@@ -112,14 +125,57 @@ public class profilePage1 extends AppCompatActivity {
     }
     public void addUserTraits()
     {
+
         LinearLayout ll = (LinearLayout)findViewById(R.id.texts_layout);
         //LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         //ll.addView(myButton, lp);
 
-        ll.addView(makeTextView("name: "+name));
         ll.addView(makeTextView("email: "+email));
-        ll.addView(makeTextView("age: "+age));
-        ll.addView(makeTextView("title: "+title));
+        for (int i=0; i<skillsArray.length(); i++) {
+            JSONObject actor = null;
+            try {
+                JSONObject testObject = (JSONObject) skillsArray.get(i);
+                int skillId = testObject.getInt("id");//skillsArray.getString(i);
+                int skillLevel = testObject.getInt("value");
+                String skillName = "blank";
+                System.out.println(i);
+                System.out.println(skillId);
+                if(skillId == 1)
+                    skillName = "JAVA: ";
+                else if(skillId == 2)
+                    skillName = "C++: ";
+                else if(skillId == 3)
+                    skillName = "PROJECT MANAGEMENT: ";
+                else if(skillId == 4)
+                    skillName = "COMMUNICATION SKILL: ";
+                else if(skillId == 5)
+                    skillName = "C#: ";
+                else if(skillId == 6)
+                    skillName = "Python: ";
+                else if(skillId == 7)
+                    skillName = "PHP: ";
+                else if(skillId == 8)
+                    skillName = "HTML: ";
+                else if(skillId == 9)
+                    skillName = "BACKEND PROGRAMMING: ";
+                else if(skillId == 10)
+                    skillName = "UI DESIGN: ";
+
+                ll.addView( makeTextView(skillName + skillLevel) );
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //ll.addView( makeTextView( actor.getString() ) );
+        }
+        //ll.addView(makeTextView("age: "+age));
+        //ll.addView(makeTextView("title: "+title));
+
+        TextView personnelName = (TextView) findViewById(R.id.personnel_name);
+        personnelName.setText(name); //set text for text view
+        TextView firstTrait = (TextView) findViewById(R.id.first_trait);
+        firstTrait.setText("title: " + title); //set text for text view
+        TextView secondTrait = (TextView) findViewById(R.id.second_trait);
+        secondTrait.setText("age: " + age); //set text for text view
 
         /*
         final int N = 5; // total number of textviews to add

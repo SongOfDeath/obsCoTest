@@ -177,6 +177,16 @@ Thread thread = new Thread(new Runnable() {
         title = userJSON.getString("title");
         System.out.println("AGE: ");
         System.out.println(age);
+
+        setName();
+    }
+
+    public void setName()
+    {
+        TextView testNameView = (TextView) findViewById(R.id.nameView);
+
+        //Toast.makeText(homeActivity1.this, "NAME: " + name, Toast.LENGTH_LONG).show();
+        testNameView.setText(name); //set text for text view
     }
 
     public void InitializeProfilButton() throws UnknownHostException, IOException
@@ -250,7 +260,6 @@ Thread thread = new Thread(new Runnable() {
         }
 
         new ConnectionTest().execute("");
-
 
 /*
         try

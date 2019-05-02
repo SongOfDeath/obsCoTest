@@ -32,7 +32,7 @@
             android:src="@drawable/bertcase" />
 
         <TextView
-            android:id="@+id/personnel_title"
+            android:id="@+id/personnel_name"
 
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
 
 
         <TextView
-            android:id="@+id/completed_projects"
+            android:id="@+id/first_trait"
 
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
@@ -70,7 +70,7 @@
             android:textColor="#FFFFFF" />
 
         <TextView
-            android:id="@+id/behavior_score"
+            android:id="@+id/second_trait"
 
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
@@ -100,8 +100,9 @@
     </LinearLayout>
 
     <ImageButton
-        android:layout_width="224dp"
-        android:layout_height="222dp"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="138dp"
+        android:layout_height="123dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -109,13 +110,12 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:src="@drawable/addbutton1"
+        android:src="@drawable/addbutton1small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.176" />
+        app:layout_constraintVertical_bias="0.224" />
 
 </android.support.constraint.ConstraintLayout>
