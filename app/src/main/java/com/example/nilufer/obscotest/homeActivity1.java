@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -48,7 +49,9 @@ boolean isSuperuser;
 
             try{
                 System.out.println("Testing 1 - Send Http GET request");
-                sendGet();
+                //sendGet();
+                sendPost();
+
 
             } catch (Exception e) {
                 System.err.println("Oops!");
@@ -132,11 +135,52 @@ Thread thread = new Thread(new Runnable() {
 
     }
     */
+    // HTTP POST request
+    private void sendPost() throws Exception {
+
+        String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/dogancan";
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        //add reuqest header
+        con.setRequestMethod("POST");
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+        //con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+        String urlParameters = "dogancan";
+        /*
+        // Send post request
+        con.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+        */
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'POST' request to URL : " + url);
+        System.out.println("Post parameters : " + urlParameters);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        //print result
+        System.out.println("MY RESPONSE IS:");
+        System.out.println(response.toString());
+
+    }
 
     private void sendGet() throws Exception {
 
         System.out.println("DEBUG POINT 1: ");
-        String url = "http://obsco.me/obsco/api/v1.0/users/12345671"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/dogancan"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -168,11 +212,11 @@ Thread thread = new Thread(new Runnable() {
         //print result
         System.out.println("RESPONSE: ");
         System.out.println(response.toString());
-
+        /*
         JSONObject reader = new JSONObject(response.toString());
 
         JSONArray allContainingArray = reader.getJSONArray("users");
-        JSONObject userJSON  = (JSONObject)allContainingArray.get(0);// reader.getJSONObject("users");
+        JSONObject userJSON  = (JSONObject)allContainingArray.get(0); //reader.getJSONObject("users");
         age = userJSON.getString("age");
         email = userJSON.getString("email");
         id = userJSON.getString("id");
@@ -183,6 +227,7 @@ Thread thread = new Thread(new Runnable() {
         System.out.println(age);
 
         setName();
+        */
     }
 
     public void setName()
