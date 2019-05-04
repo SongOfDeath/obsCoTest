@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".profilePage1">
 
-
-
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
 
         android:id="@+id/fullscreen_bot"
@@ -19,7 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UselessParent"
         tools:layout_editor_absoluteX="0dp">
-
 
         <ImageView
             android:id="@+id/profile_pic"
@@ -85,6 +85,29 @@
 
     <LinearLayout
 
+        android:id="@+id/yetenekeklelayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="top|center_horizontal"
+        android:background="#3F4996"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/traits_layout"
+        tools:ignore="UselessParent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <ImageView
+            android:id="@+id/yetenekekle"
+
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:src="@drawable/bertcase" />
+    </LinearLayout>
+
+    <LinearLayout
+
         android:id="@+id/texts_layout"
 
         android:layout_width="match_parent"
@@ -101,14 +124,10 @@
 
     <ImageButton
         style="@style/Widget.AppCompat.Button.Borderless"
+        android:id="@+id/add_comment"
         android:layout_width="138dp"
         android:layout_height="123dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+
         android:layout_weight="1"
         android:src="@drawable/addbutton1small"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -119,3 +138,5 @@
         app:layout_constraintVertical_bias="0.224" />
 
 </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

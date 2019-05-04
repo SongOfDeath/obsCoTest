@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -78,14 +79,22 @@ public class MainActivity extends AppCompatActivity {
 
                 JSONObject reader = new JSONObject(response.toString());
 
-                JSONObject userJSON  = reader.getJSONObject("user");
+                System.out.println("DEBUG POINT 5:");
+                JSONArray allContainingArray = reader.getJSONArray("users");
+                JSONObject userJSON  = (JSONObject)allContainingArray.get(0);// reader.getJSONObject("users");
+
+                //UGETJSON ARR
+
                 id = userJSON.getString("id");
+                System.out.println("DEBUG POINT 6:" + id);
+
                 password = userJSON.getString("password");
 
                 System.out.println(id);
                 System.out.println(password);
                 System.out.println(inputPassword);
-                if(password.equalsIgnoreCase(inputPassword))
+                //UNCOMMENT THIS ON PRODUCT
+                if(true)//password.equalsIgnoreCase(inputPassword))
                 {
                         System.out.println("SIFRELER AYNI");
                         //Open new page

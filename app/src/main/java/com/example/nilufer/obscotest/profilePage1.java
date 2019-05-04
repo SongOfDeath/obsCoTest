@@ -91,7 +91,9 @@ public class profilePage1 extends AppCompatActivity {
 
         JSONObject reader = new JSONObject(response.toString());
 
-        JSONObject userJSON  = reader.getJSONObject("user");
+        //JSONObject userJSON  = reader.getJSONObject("users");
+        JSONArray allContainingArray = reader.getJSONArray("users");
+        JSONObject userJSON  = (JSONObject)allContainingArray.get(0);// reader.getJSONObject("users");
         age = userJSON.getString("age");
         email = userJSON.getString("email");
         id = userJSON.getString("id");
@@ -112,6 +114,16 @@ public class profilePage1 extends AppCompatActivity {
         addUserTraits();
     }
 
+    public LinearLayout addSkillLayout(String s)
+    {
+        final LinearLayout newLayout = new LinearLayout(this);
+        newLayout.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        newLayout.setOrientation(LinearLayout.HORIZONTAL);
+        newLayout.addView( makeTextView(s) );
+        //newLayout.addView( makeTextView("! ! ! ! ! ! ! ! ! !"));
+        return newLayout;
+    }
+
     public TextView makeTextView(String s)
     {
         final TextView nameTextView = new TextView(this);
@@ -120,9 +132,10 @@ public class profilePage1 extends AppCompatActivity {
         nameTextView.setTextAppearance(this, R.style.Widget_AppCompat_Button_Borderless);
         nameTextView.setGravity(Gravity.CENTER);
         nameTextView.setMinimumHeight(175);
-        nameTextView.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        //nameTextView.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         return nameTextView;
     }
+
     public void addUserTraits()
     {
 
@@ -140,28 +153,41 @@ public class profilePage1 extends AppCompatActivity {
                 String skillName = "blank";
                 System.out.println(i);
                 System.out.println(skillId);
-                if(skillId == 1)
+                if (skillId == 1)
                     skillName = "JAVA: ";
-                else if(skillId == 2)
+                else if (skillId == 2)
                     skillName = "C++: ";
-                else if(skillId == 3)
+                else if (skillId == 3)
                     skillName = "PROJECT MANAGEMENT: ";
-                else if(skillId == 4)
+                else if (skillId == 4)
+                {
                     skillName = "COMMUNICATION SKILL: ";
-                else if(skillId == 5)
+                }
+                else if (skillId == 5)
+                {
                     skillName = "C#: ";
-                else if(skillId == 6)
+                }
+                else if (skillId == 6)
+                {
                     skillName = "Python: ";
-                else if(skillId == 7)
+                }
+                    else if (skillId == 7)
+                {
                     skillName = "PHP: ";
-                else if(skillId == 8)
+                }
+                else if (skillId == 8)
+                {
                     skillName = "HTML: ";
-                else if(skillId == 9)
+                }
+                else if (skillId == 9)
+                {
                     skillName = "BACKEND PROGRAMMING: ";
+                }
                 else if(skillId == 10)
+                {
                     skillName = "UI DESIGN: ";
-
-                ll.addView( makeTextView(skillName + skillLevel) );
+                }
+                ll.addView( addSkillLayout(skillName + skillLevel) );
             } catch (JSONException e) {
                 e.printStackTrace();
             }

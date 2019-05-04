@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -39,6 +40,8 @@ String name;
 String password;
 String title;
 boolean isSuperuser;
+
+
     private class ConnectionTest extends AsyncTask {
         @Override
         protected Object doInBackground(Object... arg0) {
@@ -168,7 +171,8 @@ Thread thread = new Thread(new Runnable() {
 
         JSONObject reader = new JSONObject(response.toString());
 
-        JSONObject userJSON  = reader.getJSONObject("user");
+        JSONArray allContainingArray = reader.getJSONArray("users");
+        JSONObject userJSON  = (JSONObject)allContainingArray.get(0);// reader.getJSONObject("users");
         age = userJSON.getString("age");
         email = userJSON.getString("email");
         id = userJSON.getString("id");
