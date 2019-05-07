@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MemberList"></activity>
+
+        <activity android:name=".MemberList" />
         <activity
             android:name=".ProfileActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -41,6 +42,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".profilePage2">
+            <intent-filter>
+                <action android:name="android.intent.action.PROFILEPAGE2" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".homeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

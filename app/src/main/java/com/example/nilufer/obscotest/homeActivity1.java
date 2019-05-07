@@ -31,6 +31,7 @@ import java.net.UnknownHostException;
 public class homeActivity1 extends AppCompatActivity {
 // MAHIR
 private Button profilButton;
+private Button testButton;
 private Button gruplarimButton;
 static Socket socket = null;
 
@@ -243,6 +244,44 @@ Thread thread = new Thread(new Runnable() {
         testNameView.setText(name); //set text for text view
     }
 
+    public void InitializeTestButton() throws UnknownHostException, IOException
+    {
+
+        testButton = (Button)findViewById(R.id.testbutton);
+
+        testButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //FIND THIS FROM DATABASE
+                //usernameFieldInput.getText().toString()
+                //MATCH WITH PASSWORD
+                //passwordFieldInput.getText().toString()
+
+                /////Log.d("myTag", "This is my message");
+                String testString = "profil button clicked";
+                Toast.makeText(homeActivity1.this, testString, Toast.LENGTH_LONG).show();
+
+                //Open new page
+                Intent intent = new Intent("android.intent.action.PROFILEPAGE2");
+                intent.putExtra("ID_FROM_LOGIN", id);
+                startActivity(intent);
+            }
+        });
+
+        //URL oracle = new URL("http://127.0.0.1:5000/"); //http://localhost:8080
+        //URLConnection yc = oracle.openConnection();
+
+        /**
+         BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+         String inputLine;
+         while ((inputLine = in.readLine()) != null)
+         System.out.println(inputLine);
+         in.close();
+         */
+    }
+
     public void InitializeProfilButton() throws UnknownHostException, IOException
     {
 
@@ -264,6 +303,7 @@ Thread thread = new Thread(new Runnable() {
 
                 //Open new page
                 Intent intent = new Intent("android.intent.action.PROFILEPAGE");
+                intent.putExtra("ID_FROM_LOGIN", id);
                 startActivity(intent);
             }
         });
@@ -312,10 +352,12 @@ Thread thread = new Thread(new Runnable() {
 
         try {
             InitializeProfilButton();
+            InitializeTestButton();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("PROFIL ERROR");
         }
+
 
         new ConnectionTest().execute("");
 
