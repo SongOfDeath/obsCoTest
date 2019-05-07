@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("SIFRELER AYNI");
                         //Open new page
                         Intent intent = new Intent("android.intent.action.HOMEPAGE1");
+                        intent.putExtra("ID_FROM_LOGIN", id);
                         startActivity(intent);
                 }
 

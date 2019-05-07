@@ -43,6 +43,7 @@ public class profilePage1 extends AppCompatActivity {
 
             try{
                 System.out.println("Testing 1 - Send Http GET request");
+                getReputation();
                 sendGet();
 
             } catch (Exception e) {
@@ -51,6 +52,13 @@ public class profilePage1 extends AppCompatActivity {
             }
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            addUserTraits();
+            //Show the result obtained from doInBackground
+        }
+
     }
 
     private void sendGet() throws Exception {
@@ -111,7 +119,48 @@ public class profilePage1 extends AppCompatActivity {
         System.out.println("AGE: ");
         System.out.println(age);
 
-        addUserTraits();
+
+    }
+
+    private void getReputation() throws Exception {
+
+        String url = "http://obsco.me/obsco/api/v1.0/reputation/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        id = "12345671";
+        url = url + id;
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        // optional default is GET
+        con.setRequestMethod("GET");
+
+        //add request header
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+        int responseCode = con.getResponseCode();
+
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        int cntTest1 = 0;
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+            cntTest1++;
+            System.out.println(cntTest1);
+        }
+        in.close();
+
+        //print result
+        System.out.println("RESPONSE: ");
+        System.out.println(response.toString());
+
+        JSONObject reader = new JSONObject(response.toString());
+        Double reputationValue = reader.getDouble("reputation");
+        TextView reputationText = (TextView) findViewById(R.id.second_trait);
+        reputationText.setText(reputationValue.toString());
     }
 
     public LinearLayout addSkillLayout(String s)
@@ -200,8 +249,6 @@ public class profilePage1 extends AppCompatActivity {
         personnelName.setText(name); //set text for text view
         TextView firstTrait = (TextView) findViewById(R.id.first_trait);
         firstTrait.setText("title: " + title); //set text for text view
-        TextView secondTrait = (TextView) findViewById(R.id.second_trait);
-        secondTrait.setText("age: " + age); //set text for text view
 
         /*
         final int N = 5; // total number of textviews to add
@@ -266,6 +313,9 @@ public class profilePage1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page1);
+
+        /////
+        id = getIntent().getStringExtra("ID_FROM_LOGIN");
 
         makeProfilePicCircular();
         new ConnectionTest().execute("");

@@ -49,8 +49,8 @@ boolean isSuperuser;
 
             try{
                 System.out.println("Testing 1 - Send Http GET request");
-                //sendGet();
-                sendPost();
+                sendGet();
+                //sendPost();
 
 
             } catch (Exception e) {
@@ -138,7 +138,9 @@ Thread thread = new Thread(new Runnable() {
     // HTTP POST request
     private void sendPost() throws Exception {
 
-        String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/dogancan";
+        String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/12345671/androiddev";
+        //String url = "http://obsco.me/obsco/api/v1.0/reputation/12345671";
+        //url = url + id + "/" + "androiddev";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -180,8 +182,11 @@ Thread thread = new Thread(new Runnable() {
     private void sendGet() throws Exception {
 
         System.out.println("DEBUG POINT 1: ");
-        String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/dogancan"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        //String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/dogancan"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        String url = "http://obsco.me/obsco/api/v1.0/addskill/androiddev";
+        //String url = "http://obsco.me/obsco/api/v1.0/skills/21400537";
 
+        //String url = "http://obsco.me/obsco/api/v1.0/reputation/12345671";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         System.out.println("DEBUG POINT 2: ");
@@ -290,6 +295,7 @@ Thread thread = new Thread(new Runnable() {
 
                 //Open new page
                 Intent intent = new Intent("android.intent.action.HOME");
+                intent.putExtra("ID_FROM_LOGIN", id);
                 startActivity(intent);
             }
         });
@@ -300,6 +306,9 @@ Thread thread = new Thread(new Runnable() {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home1);
+
+        ///////
+        id = getIntent().getStringExtra("ID_FROM_LOGIN");
 
         try {
             InitializeProfilButton();
