@@ -270,7 +270,7 @@ public class profilePage2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_page1);
+        setContentView(R.layout.activity_profile_page2);
 
         /////
         id = getIntent().getStringExtra("ID_FROM_LOGIN");

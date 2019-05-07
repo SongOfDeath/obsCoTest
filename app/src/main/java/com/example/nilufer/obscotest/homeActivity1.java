@@ -260,11 +260,11 @@ Thread thread = new Thread(new Runnable() {
                 //passwordFieldInput.getText().toString()
 
                 /////Log.d("myTag", "This is my message");
-                String testString = "profil button clicked";
+                String testString = "TESTOOOOOOOO";
                 Toast.makeText(homeActivity1.this, testString, Toast.LENGTH_LONG).show();
 
                 //Open new page
-                Intent intent = new Intent("android.intent.action.PROFILEPAGE2");
+                Intent intent = new Intent("android.intent.action.SECONDPROFILEPAGE");
                 intent.putExtra("ID_FROM_LOGIN", id);
                 startActivity(intent);
             }
@@ -351,12 +351,20 @@ Thread thread = new Thread(new Runnable() {
         id = getIntent().getStringExtra("ID_FROM_LOGIN");
 
         try {
-            InitializeProfilButton();
             InitializeTestButton();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            InitializeProfilButton();
+
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("PROFIL ERROR");
         }
+
+
 
 
         new ConnectionTest().execute("");

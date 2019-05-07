@@ -49,7 +49,7 @@
             android:id="@+id/traits_layout"
 
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="50dp"
             android:layout_gravity="top|center_horizontal"
             android:background="#3F4996"
             android:orientation="horizontal"
@@ -103,7 +103,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#3F7596"
-                android:text="YETENEK \nEKLE"
+                android:text="PROFIL 2 \nEKLE"
                 android:textColor="#FFFFFF"
                 />
         </LinearLayout>
@@ -125,19 +125,19 @@
         </LinearLayout>
 
         <ImageButton
-            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/add_comment"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="138dp"
             android:layout_height="123dp"
 
             android:layout_weight="1"
-            android:src="@drawable/addbutton1small"
+            android:src="@drawable/comicon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.224" />
+            app:layout_constraintVertical_bias="0.589" />
 
     </android.support.constraint.ConstraintLayout>
 

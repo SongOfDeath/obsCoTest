@@ -103,7 +103,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#3F7596"
-            android:text="YETENEK \nEKLE"
+            android:text="PROFIL 1 \nEKLE"
             android:textColor="#FFFFFF"
             />
     </LinearLayout>
