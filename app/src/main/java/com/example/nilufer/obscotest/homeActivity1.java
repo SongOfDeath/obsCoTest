@@ -294,7 +294,7 @@ Thread thread = new Thread(new Runnable() {
                 Toast.makeText(homeActivity1.this, testString, Toast.LENGTH_LONG).show();
 
                 //Open new page
-                Intent intent = new Intent("android.intent.action.HOME");
+                Intent intent = new Intent("android.intent.action.GROUP");
                 intent.putExtra("ID_FROM_LOGIN", id);
                 startActivity(intent);
             }
