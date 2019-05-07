@@ -36,7 +36,7 @@ public class profilePage2 extends AppCompatActivity {
     String name;
     String password;
     String title;
-    JSONArray skillsArray;
+    JSONArray skillsContainingArray;
     boolean isSuperuser;
 
     private class ConnectionTest extends AsyncTask {
@@ -58,6 +58,23 @@ public class profilePage2 extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object o) {
+
+            LinearLayout ll = (LinearLayout)findViewById(R.id.texts_layout);
+            ll.addView(makeTextView("email: "+email));
+            for (int i=0; i<skillsContainingArray.length(); i++)
+            {
+                String skillName;
+                int skillLevel;
+                try {
+                    JSONObject testObject = (JSONObject) skillsContainingArray.get(i);
+                    skillName = testObject.getString("name");//skillsArray.getString(i);
+                    skillLevel = testObject.getInt("value");
+                    ll.addView( addSkillLayout(skillName + skillLevel) );
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
             //addUserTraits();
             //Show the result obtained from doInBackground
         }
@@ -103,10 +120,13 @@ public class profilePage2 extends AppCompatActivity {
 
         JSONObject reader = new JSONObject(response.toString());
 
-        JSONArray allContainingArray = reader.getJSONArray("skills");
-        JSONObject userJSON  = (JSONObject)allContainingArray.get(1);
-        System.out.println(userJSON.getString("name"));
+        skillsContainingArray = reader.getJSONArray("skills");
+        JSONObject skillJSON  = (JSONObject)skillsContainingArray.get(1);
+        System.out.println(skillJSON.getString("name"));
         System.out.println("DEB1: ");
+
+
+
         //skillsArray = (JSONArray) userJSON.get("skills");
         //System.out.println("LENGTHXD: ");
         //System.out.println(skillsArray.length());
@@ -145,23 +165,6 @@ public class profilePage2 extends AppCompatActivity {
         //JSONObject userJSON  = reader.getJSONObject("users");
         JSONArray allContainingArray = reader.getJSONArray("users");
         JSONObject userJSON  = (JSONObject)allContainingArray.get(0);// reader.getJSONObject("users");
-        /*
-        age = userJSON.getString("age");
-        email = userJSON.getString("email");
-        id = userJSON.getString("id");
-        name = userJSON.getString("name");
-        password = userJSON.getString("password");
-        title = userJSON.getString("title");
-        */
-        // getting phoneNumbers
-        skillsArray = (JSONArray) userJSON.get("skills");
-        System.out.println("JA LENGTH: ");
-        System.out.println(skillsArray.length());
-        //ja.getJSONObject(i)
-        // iterating phoneNumbers
-
-        System.out.println("AGE: ");
-        System.out.println(age);
 
 
     }
@@ -229,108 +232,7 @@ public class profilePage2 extends AppCompatActivity {
         return nameTextView;
     }
 
-    public void addUserTraits()
-    {
 
-        LinearLayout ll = (LinearLayout)findViewById(R.id.texts_layout);
-        //LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        //ll.addView(myButton, lp);
-
-        ll.addView(makeTextView("email: "+email));
-        for (int i=0; i<skillsArray.length(); i++) {
-            JSONObject actor = null;
-            try {
-                JSONObject testObject = (JSONObject) skillsArray.get(i);
-                int skillId = testObject.getInt("id");//skillsArray.getString(i);
-                int skillLevel = testObject.getInt("value");
-                String skillName = "blank";
-                System.out.println(i);
-                System.out.println(skillId);
-                if (skillId == 1)
-                    skillName = "JAVA: ";
-                else if (skillId == 2)
-                    skillName = "C++: ";
-                else if (skillId == 3)
-                    skillName = "PROJECT MANAGEMENT: ";
-                else if (skillId == 4)
-                {
-                    skillName = "COMMUNICATION SKILL: ";
-                }
-                else if (skillId == 5)
-                {
-                    skillName = "C#: ";
-                }
-                else if (skillId == 6)
-                {
-                    skillName = "Python: ";
-                }
-                else if (skillId == 7)
-                {
-                    skillName = "PHP: ";
-                }
-                else if (skillId == 8)
-                {
-                    skillName = "HTML: ";
-                }
-                else if (skillId == 9)
-                {
-                    skillName = "BACKEND PROGRAMMING: ";
-                }
-                else if(skillId == 10)
-                {
-                    skillName = "UI DESIGN: ";
-                }
-                ll.addView( addSkillLayout(skillName + skillLevel) );
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            //ll.addView( makeTextView( actor.getString() ) );
-        }
-        //ll.addView(makeTextView("age: "+age));
-        //ll.addView(makeTextView("title: "+title));
-
-        TextView personnelName = (TextView) findViewById(R.id.personnel_name);
-        personnelName.setText(name); //set text for text view
-        TextView firstTrait = (TextView) findViewById(R.id.first_trait);
-        firstTrait.setText("title: " + title); //set text for text view
-
-        /*
-        final int N = 5; // total number of textviews to add
-
-        final TextView[] myTextViews = new TextView[N]; // create an empty array;
-
-        for (int i = 0; i < N; i++)
-        {
-            // create a new textview
-            final TextView rowTextView = new TextView(this);
-
-            // set some properties of rowTextView or something
-            rowTextView.setText("Personel teknik yetenek #" + i);
-
-
-            Random rnd = new Random();
-            int randomColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-            rowTextView.setBackgroundColor( Color.argb(255,255,255,255) );
-            rowTextView.setTextAppearance(this, R.style.Widget_AppCompat_Button_Borderless);
-            rowTextView.setGravity(Gravity.CENTER);
-            rowTextView.setMinimumHeight(175);
-
-
-            //if we already have layout params
-            //ViewGroup.LayoutParams params = rowTextView.getLayoutParams();
-            //params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            //params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            //rowTextView.setLayoutParams(params);
-
-            // add the textview to the linearlayout
-            rowTextView.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            ll.addView(rowTextView);
-
-            // save a reference to the textview for later
-            myTextViews[i] = rowTextView;
-        }
-        */
-    }
 
     public void makeProfilePicCircular()
     {
