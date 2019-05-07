@@ -1,5 +1,6 @@
 package com.example.nilufer.obscotest;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class GroupPage extends AppCompatActivity {
     private static final String TAG = "RecycleViewAdapter";
     private ArrayList<Integer> groupIDs = new ArrayList<>();
     private ArrayList<String> groupNames = new ArrayList<>();
+    private String userID;
 
     private class groupPageConnect extends AsyncTask {
         @Override
@@ -48,7 +50,8 @@ public class GroupPage extends AppCompatActivity {
     }
 
     private void getGroups() throws Exception{
-        String url = "http://obsco.me/obsco/api/v1.0/users/12345671";
+
+        String url = "http://obsco.me/obsco/api/v1.0/users/" + userID;
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
@@ -117,6 +120,8 @@ public class GroupPage extends AppCompatActivity {
     }
 
     private void groupPageInit() throws Exception{
+        Intent intent = getIntent();
+        userID = intent.getStringExtra("ID_FROM_LOGIN");
         new groupPageConnect().execute();
         //initRecyclerView();
     }
