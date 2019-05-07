@@ -64,8 +64,8 @@ public class profilePage1 extends AppCompatActivity {
     private void sendGet() throws Exception {
 
         System.out.println("DEBUG POINT 1: ");
-        String url = "http://obsco.me/obsco/api/v1.0/users/12345671"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
-
+        String url = "http://obsco.me/obsco/api/v1.0/users/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        url = url + id;
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         System.out.println("DEBUG POINT 2: ");

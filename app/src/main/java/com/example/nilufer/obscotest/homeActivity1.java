@@ -184,8 +184,8 @@ Thread thread = new Thread(new Runnable() {
 
         System.out.println("DEBUG POINT 1: ");
         //String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/dogancan"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
-        String url = "http://obsco.me/obsco/api/v1.0/addskill/androiddev";
-        //String url = "http://obsco.me/obsco/api/v1.0/skills/21400537";
+        //String url = "http://obsco.me/obsco/api/v1.0/addskill/androiddev";
+        String url = "http://obsco.me/obsco/api/v1.0/skills/21400537";
 
         //String url = "http://obsco.me/obsco/api/v1.0/reputation/12345671";
         URL obj = new URL(url);

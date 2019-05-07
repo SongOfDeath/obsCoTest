@@ -46,7 +46,8 @@ public class profilePage2 extends AppCompatActivity {
             try{
                 System.out.println("Testing 1 - Send Http GET request");
                 getReputation();
-                sendGet();
+                //sendGet();
+                sendTest();
 
             } catch (Exception e) {
                 System.err.println("Oops!");
@@ -57,17 +58,20 @@ public class profilePage2 extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object o) {
-            addUserTraits();
+            //addUserTraits();
             //Show the result obtained from doInBackground
         }
 
     }
 
-    private void sendGet() throws Exception {
+    private void sendTest() throws Exception {
 
         System.out.println("DEBUG POINT 1: ");
-        String url = "http://obsco.me/obsco/api/v1.0/users/12345671"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        //String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/dogancan"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        //String url = "http://obsco.me/obsco/api/v1.0/addskill/androiddev";
+        String url = "http://obsco.me/obsco/api/v1.0/skills/21400537";
 
+        //String url = "http://obsco.me/obsco/api/v1.0/reputation/12345671";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         System.out.println("DEBUG POINT 2: ");
@@ -87,12 +91,40 @@ public class profilePage2 extends AppCompatActivity {
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuffer response = new StringBuffer();
-        int cntTest1 = 0;
+
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
-            cntTest1++;
-            System.out.println(cntTest1);
         }
+        in.close();
+
+        //print result
+        System.out.println("RESPONSE: ");
+        System.out.println(response.toString());
+
+    }
+
+    private void sendGet() throws Exception {
+
+        System.out.println("DEBUG POINT 1: ");
+        String url = "http://obsco.me/obsco/api/v1.0/users/12345671"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        // optional default is GET
+        con.setRequestMethod("GET");
+        //add request header
+        //con.setRequestProperty("User-Agent",);
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
         in.close();
 
         //print result
@@ -104,13 +136,14 @@ public class profilePage2 extends AppCompatActivity {
         //JSONObject userJSON  = reader.getJSONObject("users");
         JSONArray allContainingArray = reader.getJSONArray("users");
         JSONObject userJSON  = (JSONObject)allContainingArray.get(0);// reader.getJSONObject("users");
+        /*
         age = userJSON.getString("age");
         email = userJSON.getString("email");
         id = userJSON.getString("id");
         name = userJSON.getString("name");
         password = userJSON.getString("password");
         title = userJSON.getString("title");
-
+        */
         // getting phoneNumbers
         skillsArray = (JSONArray) userJSON.get("skills");
         System.out.println("JA LENGTH: ");
