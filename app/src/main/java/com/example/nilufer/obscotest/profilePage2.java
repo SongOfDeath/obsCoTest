@@ -101,6 +101,15 @@ public class profilePage2 extends AppCompatActivity {
         System.out.println("RESPONSE: ");
         System.out.println(response.toString());
 
+        JSONObject reader = new JSONObject(response.toString());
+
+        JSONArray allContainingArray = reader.getJSONArray("skills");
+        JSONObject userJSON  = (JSONObject)allContainingArray.get(1);
+        System.out.println(userJSON.getString("name"));
+        System.out.println("DEB1: ");
+        //skillsArray = (JSONArray) userJSON.get("skills");
+        //System.out.println("LENGTHXD: ");
+        //System.out.println(skillsArray.length());
     }
 
     private void sendGet() throws Exception {
