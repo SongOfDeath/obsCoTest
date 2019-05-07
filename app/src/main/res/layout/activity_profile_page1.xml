@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="top|center_horizontal"
-        android:background="#3F4996"
+        android:background="#606060"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UselessParent"

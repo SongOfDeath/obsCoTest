@@ -215,11 +215,23 @@ public class profilePage2 extends AppCompatActivity {
         final LinearLayout newLayout = new LinearLayout(this);
         newLayout.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         newLayout.setOrientation(LinearLayout.HORIZONTAL);
+        //newLayout.setGravity(Gravity.);
+        newLayout.addView( makeBallImageView() );
         newLayout.addView( makeTextView(s) );
         //newLayout.addView( makeTextView("! ! ! ! ! ! ! ! ! !"));
         return newLayout;
     }
 
+    public ImageView makeBallImageView()
+    {
+        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(125, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layoutParams.gravity=Gravity.CENTER;
+        ImageView newImage = new ImageView(this);
+        newImage.setImageResource(R.drawable.ball1);
+        newImage.setLayoutParams(layoutParams);
+
+        return newImage;
+    }
     public TextView makeTextView(String s)
     {
         final TextView nameTextView = new TextView(this);
