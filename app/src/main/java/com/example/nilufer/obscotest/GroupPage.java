@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class GroupPage extends AppCompatActivity {
 
     private static final String TAG = "RecycleViewAdapter";
-    private ArrayList<Integer> groupIDs = new ArrayList<>();
+    private ArrayList<String> groupIDs = new ArrayList<>();
     private ArrayList<String> groupNames = new ArrayList<>();
     private String userID;
 
@@ -75,16 +75,9 @@ public class GroupPage extends AppCompatActivity {
 
         Log.d(TAG, "initializing");
         for (int x = 0; x < temp.length(); x++){
-            //System.out.println(temp.getJSONObject(x).getInt("id"));
-            groupIDs.add(temp.getJSONObject(x).getInt("id"));
-            System.out.println(groupIDs.size() );
-            System.out.println(groupIDs.get(x));
-            //groupNames.add("Dummy");
-
+            groupIDs.add(temp.getJSONObject(x).getString("id"));
             url = "http://obsco.me/obsco/api/v1.0/groupname/" + groupIDs.get(x);
-            System.out.println("ar1");
             obj = new URL(url);
-            System.out.println("ar2");
             con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
@@ -100,7 +93,6 @@ public class GroupPage extends AppCompatActivity {
             in.close();
 
             reader = new JSONObject(response.toString());
-            System.out.println(reader.getString("name"));
             groupNames.add(reader.getString("name"));
         }
 
