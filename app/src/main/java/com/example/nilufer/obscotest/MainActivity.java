@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         String id;
         String password;
         String inputPassword;
+        String name;
         boolean correctLoginInfo = false;
 
         private class ConnectionTest extends AsyncTask {
@@ -87,19 +88,20 @@ public class MainActivity extends AppCompatActivity {
 
                 id = userJSON.getString("id");
                 System.out.println("DEBUG POINT 6:" + id);
-
+                name = userJSON.getString("name");
                 password = userJSON.getString("password");
 
                 System.out.println(id);
                 System.out.println(password);
                 System.out.println(inputPassword);
                 //UNCOMMENT THIS ON PRODUCT
-                if(true)//password.equalsIgnoreCase(inputPassword))
+                if(password.equalsIgnoreCase(inputPassword))
                 {
                         System.out.println("SIFRELER AYNI");
                         //Open new page
                         Intent intent = new Intent("android.intent.action.HOMEPAGE1");
                         intent.putExtra("ID_FROM_LOGIN", id);
+                        intent.putExtra("NAME_FROM_LOGIN", name);
                         startActivity(intent);
                 }
 

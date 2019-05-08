@@ -238,7 +238,7 @@ Thread thread = new Thread(new Runnable() {
 
     public void setName()
     {
-        TextView testNameView = (TextView) findViewById(R.id.nameView);
+        TextView testNameView = (TextView) findViewById(R.id.homeNameView);
 
         //Toast.makeText(homeActivity1.this, "NAME: " + name, Toast.LENGTH_LONG).show();
         testNameView.setText(name); //set text for text view
@@ -349,7 +349,8 @@ Thread thread = new Thread(new Runnable() {
 
         ///////
         id = getIntent().getStringExtra("ID_FROM_LOGIN");
-
+        name = getIntent().getStringExtra("NAME_FROM_LOGIN");
+        setName();
         try {
             InitializeTestButton();
         } catch (IOException e) {

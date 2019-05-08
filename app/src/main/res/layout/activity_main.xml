@@ -28,7 +28,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:singleLine="true"
-        android:text="cokguclusifre"
+        android:text="banaismailde"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.477"
@@ -64,7 +64,7 @@
         android:inputType="textPersonName"
         android:singleLine="true"
 
-        android:text="12345671"
+        android:text="21400537"
         android:textColor="@android:color/darker_gray"
         android:textSize="15dip"
         app:layout_constraintBottom_toBottomOf="parent"

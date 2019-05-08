@@ -100,7 +100,7 @@
         app:layout_constraintVertical_bias="0.818" />
 
     <TextView
-        android:id="@+id/nameView"
+        android:id="@+id/homeNameView"
         android:layout_width="167dp"
         android:layout_height="74dp"
 
