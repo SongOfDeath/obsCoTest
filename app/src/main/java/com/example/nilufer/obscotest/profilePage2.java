@@ -227,7 +227,7 @@ public class profilePage2 extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(125, LinearLayout.LayoutParams.WRAP_CONTENT));
         layoutParams.gravity=Gravity.CENTER;
         ImageView newImage = new ImageView(this);
-        newImage.setImageResource(R.drawable.ball1);
+        newImage.setImageResource(R.drawable.ball3);
         newImage.setLayoutParams(layoutParams);
 
         return newImage;
@@ -236,6 +236,7 @@ public class profilePage2 extends AppCompatActivity {
     {
         final TextView nameTextView = new TextView(this);
         nameTextView.setText(s);
+        nameTextView.setTextSize(20);
         nameTextView.setBackgroundColor( Color.argb(255,255,255,255) );
         nameTextView.setTextAppearance(this, R.style.Widget_AppCompat_Button_Borderless);
         nameTextView.setGravity(Gravity.CENTER);
