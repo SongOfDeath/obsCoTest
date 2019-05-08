@@ -18,11 +18,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecycleViewAdapter";
 
-    private ArrayList<Integer> groupIDs;
+    private ArrayList<String> groupIDs;
     private ArrayList<String> groupNames;
     private Context mContext;
 
-    public RecyclerViewAdapter(Context mContext, ArrayList<Integer> groupIDs, ArrayList<String> groupNames) {
+    public RecyclerViewAdapter(Context mContext, ArrayList<String> groupIDs, ArrayList<String> groupNames) {
         this.groupIDs = groupIDs;
         this.groupNames = groupNames;
         this.mContext = mContext;
@@ -32,8 +32,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem, viewGroup, false);
-        ViewHolder holder = new ViewHolder(view);
-        /*holder.groupName.setOnClickListener(new View.OnClickListener()
+        final ViewHolder holder = new ViewHolder(view);
+        holder.groupName.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -44,18 +44,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 //Open new page
                 Intent intent = new Intent("android.intent.action.ML");
+                intent.putExtra("groupID", holder.groupID);
                 mContext.startActivity(intent);
             }
-        });*/
+        });
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Log.d(TAG, "onBindViewHolder: called.");
-        System.out.println (position);
-        System.out.println (groupNames.size());
         viewHolder.groupName.setText(groupNames.get(position));
+        viewHolder.groupID = groupIDs.get(position);
         //viewHolder.groupName.setText("dummy");
     }
 
@@ -68,6 +68,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         //CircleImageView image;
         Button groupName;
+        String groupID;
+
         RelativeLayout parentLayout;
 
         public ViewHolder(@NonNull View itemView) {
