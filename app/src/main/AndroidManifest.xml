@@ -50,6 +50,17 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
+=======
+        <activity android:name=".profilePage2">
+            <intent-filter>
+                <action android:name="android.intent.action.SECONDPROFILEPAGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+>>>>>>> 7900b88d1a55b8290ebf65a95c84d43f86d1ac74
         <activity
             android:name=".homeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
