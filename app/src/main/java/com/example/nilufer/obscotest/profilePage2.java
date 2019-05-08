@@ -74,7 +74,7 @@ public class profilePage2 extends AppCompatActivity {
                     skillLevel = testObject.getDouble("value");
 
 
-                    ll.addView( addSkillLayout(skillName + "\n " + skillLevel) );
+                    ll.addView( addSkillLayout( skillName ) );// + "\n " + skillLevel) );
                     ll.addView( makeStarsLayout() );
 
                 } catch (JSONException e) {
@@ -313,6 +313,7 @@ public class profilePage2 extends AppCompatActivity {
         {
             newLayout.addView( makeImageView1(R.drawable.bluestarnew2,50) );
         }
+        newLayout.addView( makeTextView("   " + skillLevel.toString()) );
         return newLayout;
     }
 
