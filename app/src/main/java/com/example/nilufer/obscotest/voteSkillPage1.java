@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
-public class profilePage2 extends AppCompatActivity {
+public class voteSkillPage1 extends AppCompatActivity {
     // MAHIR
     String idFromGroupPage;
     String groupIdFromGroupPage;
@@ -45,7 +45,7 @@ public class profilePage2 extends AppCompatActivity {
     JSONArray skillsContainingArray;
     boolean isSuperuser;
 
-    private ImageView addCommentButton;
+    private ImageView voteButton;
     LinearLayout ll;
     private class ConnectionTest extends AsyncTask {
         @Override
@@ -76,8 +76,8 @@ public class profilePage2 extends AppCompatActivity {
                     skillLevel = testObject.getDouble("value");
 
 
-                    ll.addView( addSkillLayout( skillName ) );//THIS HAS TO BE ONLY SKILL NAME NOW // + "\n " + skillLevel) );
-                    ll.addView( makeStarsLayout() );
+                    //ll.addView( addSkillLayout( skillName ) );//THIS HAS TO BE ONLY SKILL NAME NOW // + "\n " + skillLevel) );
+                    ll.addView( makeStarsLayout(0) );
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -90,22 +90,24 @@ public class profilePage2 extends AppCompatActivity {
 
     }
 
-    public void InitializeCommentButton()
+    public void InitializeVoteButton()
     {
-        addCommentButton = (ImageView)findViewById(R.id.add_comment);
+        voteButton = (ImageView)findViewById(R.id.add_vote);
 
-        addCommentButton.setOnClickListener(new View.OnClickListener()
+        voteButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-
+                new ConnectionTest().execute("");
                 //Open new page
+                /*
                 Intent intent = new Intent("android.intent.action.ADDCOMMENTPAGE");
                 intent.putExtra("ID_FROM_LOGIN", id);
                 intent.putExtra("NAME_FROM_LOGIN", name);
                 intent.putExtra("PASSWORD_FROM_LOGIN", password);
                 startActivity(intent);
+                */
             }
         });
     }
@@ -160,6 +162,7 @@ public class profilePage2 extends AppCompatActivity {
         nameText.setText(name);
     }
 
+/*
     public LinearLayout addSkillLayout(String s)
     {
         final LinearLayout newLayout = new LinearLayout(this);
@@ -192,8 +195,8 @@ public class profilePage2 extends AppCompatActivity {
         //newLayout.addView( makeTextView("! ! ! ! ! ! ! ! ! !"));
         return newLayout;
     }
-
-    public LinearLayout makeStarsLayout()
+*/
+    public LinearLayout makeStarsLayout(int cnt)
     {
         final LinearLayout newLayout = new LinearLayout(this);
         LinearLayout.LayoutParams newLayoutParams = new LinearLayout.LayoutParams(
@@ -202,22 +205,36 @@ public class profilePage2 extends AppCompatActivity {
         newLayout.setLayoutParams(newLayoutParams);
         newLayout.setOrientation(LinearLayout.HORIZONTAL);
         //newLayout.setGravity(Gravity.CENTER);
-        for(int i=1; i<skillLevel; i++)
+        for(int i=0; i<cnt; i++)
         {
-            newLayout.addView( makeImageView1(R.drawable.bluestarnew2,50) );
+            newLayout.addView( makeImageView1(R.drawable.star40blue,100, i) );
         }
-        newLayout.addView( makeTextView("   " + skillLevel.toString()) );
+        for(int i=cnt; i<10; i++)
+        {
+            newLayout.addView( makeImageView1(R.drawable.star40gray,100, i) );
+        }
+        //newLayout.addView( makeTextView("   " + skillLevel.toString()) );
         return newLayout;
     }
 
-    public ImageView makeImageView1(int resourceName, int widthToUse)
+    public ImageView makeImageView1(int resourceName, int widthToUse, int imageId)
     {
         LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(widthToUse, LinearLayout.LayoutParams.WRAP_CONTENT));
         layoutParams.gravity=Gravity.CENTER;
-        ImageView newImage = new ImageView(this);
+        final ImageView newImage = new ImageView(this);
         newImage.setImageResource(resourceName);
         newImage.setLayoutParams(layoutParams);
+        newImage.setId(imageId);
 
+        newImage.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                ll.removeAllViews();
+                ll.addView( makeStarsLayout(newImage.getId()) );
+            }
+        });
         return newImage;
     }
     public TextView makeTextView(String s)
@@ -249,8 +266,10 @@ public class profilePage2 extends AppCompatActivity {
         name = getIntent().getStringExtra("NAME_FROM_LOGIN");
         password = getIntent().getStringExtra("PASSWORD_FROM_LOGIN");
 
+        InitializeVoteButton();
 
-        new ConnectionTest().execute("");
+        ll.addView(makeStarsLayout(0));
+
         //addUserTraits();
     }
 }
