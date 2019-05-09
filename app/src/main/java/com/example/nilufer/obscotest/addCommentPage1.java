@@ -26,9 +26,9 @@ public class addCommentPage1 extends AppCompatActivity {
     String password;
     String inputPassword;
     String name;
-    String userId = "12345671";
     String secondUserId = "21400537";
     String sentimentString = "";
+    String groupID;
     boolean correctLoginInfo = false;
 
     private class ConnectionTest extends AsyncTask {
@@ -51,9 +51,13 @@ public class addCommentPage1 extends AppCompatActivity {
             //Open new page
 
             Intent intent = new Intent("android.intent.action.SECONDPROFILEPAGE");
+
             intent.putExtra("ID_FROM_LOGIN", id);
             intent.putExtra("NAME_FROM_LOGIN", name);
             intent.putExtra("PASSWORD_FROM_LOGIN", password);
+            intent.putExtra("secondUserID", secondUserId);
+            intent.putExtra("groupID", groupID);
+
             startActivity(intent);
 
             //Show the result obtained from doInBackground
@@ -182,6 +186,8 @@ public class addCommentPage1 extends AppCompatActivity {
         id = getIntent().getStringExtra("ID_FROM_LOGIN");
         name = getIntent().getStringExtra("NAME_FROM_LOGIN");
         password = getIntent().getStringExtra("PASSWORD_FROM_LOGIN");
+        secondUserId = getIntent().getStringExtra("secondUserID");
+        groupID = getIntent().getStringExtra("groupID");
         TamamlaButton();
 
     }
