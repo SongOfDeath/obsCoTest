@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -48,7 +46,6 @@ public class MemberList extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             //call what you want to update
             initRecyclerView();
-            initMainMenuButton();
             // dismiss progress dialog here
             // into onPostExecute() but that is upto you
         }
@@ -116,21 +113,5 @@ public class MemberList extends AppCompatActivity {
                 groupID, userID, userName, password);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager( new LinearLayoutManager( this));
-    }
-    private void initMainMenuButton(){
-        Log.d(TAG, "initializingCreateGroupButton");
-
-        Button mainMenu = findViewById(R.id.button_main_menu);
-        mainMenu.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Open new page
-                Intent intent = new Intent("android.intent.action.HOMEPAGE1");
-                intent.putExtra("userID", userID );
-                startActivity(intent);
-            }
-        });
     }
 }

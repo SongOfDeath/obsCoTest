@@ -9,14 +9,14 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="500sp"
+        android:layout_height="600sp"
         app:layout_constraintTop_toTopOf="parent">
     </android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
         android:id="@+id/button_view"
         android:layout_width="match_parent"
-        android:layout_height="250sp"
+        android:layout_height="150sp"
         android:background="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@id/recycler_view"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -27,15 +27,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15sp"
             android:text="Yeni Grup"
-            android:textSize="40sp"/>
-        <Button
-            android:id="@+id/button_main_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Ana Menü"
-            android:textSize="40sp"
-            android:layout_below="@+id/button_new_group"/>
+            android:textSize="20sp"/>
     </RelativeLayout>
 
 
