@@ -1,6 +1,7 @@
 package com.example.nilufer.obscotest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +18,10 @@ public class RecyclerViewAdapterMembers extends RecyclerView.Adapter<RecyclerVie
 
     private ArrayList<String> memberIDs;
     private ArrayList<String> memberNames;
+    private String groupID;
+    private String userID;
+    private String password;
+    private String userName;
     private Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -34,9 +39,14 @@ public class RecyclerViewAdapterMembers extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    public RecyclerViewAdapterMembers (Context mContext, ArrayList<String> memberIDs, ArrayList<String> memberNames) {
+    public RecyclerViewAdapterMembers (Context mContext, ArrayList<String> memberIDs, ArrayList<String> memberNames,
+                                       String groupID, String userID, String userName, String password) {
         this.memberIDs = memberIDs;
         this.memberNames = memberNames;
+        this.groupID = groupID;
+        this.userID = userID;
+        this.userName = userName;
+        this.password = password;
         this.mContext = mContext;
     }
 
@@ -45,6 +55,21 @@ public class RecyclerViewAdapterMembers extends RecyclerView.Adapter<RecyclerVie
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem_member, viewGroup, false);
         final ViewHolder holder = new ViewHolder(view);
+        holder.memberName.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Open new page
+                Intent intent = new Intent("android.intent.action.SECONDPROFILEPAGE");
+                intent.putExtra("groupID", groupID);
+                intent.putExtra("ID_FROM_LOGIN", userID);
+                intent.putExtra("NAME_FROM_LOGIN", userName);
+                intent.putExtra("PASSWORD_FROM_LOGIN", password);
+                intent.putExtra("secondUserID", holder.memberID);
+                mContext.startActivity(intent);
+            }
+        });
         return holder;
     }
 
