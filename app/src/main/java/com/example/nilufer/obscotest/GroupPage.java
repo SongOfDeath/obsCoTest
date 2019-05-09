@@ -145,5 +145,17 @@ public class GroupPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button mainMenu = findViewById(R.id.button_main_menu);
+        mainMenu.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Open new page
+                Intent intent = new Intent("android.intent.action.HOMEPAGE1");
+                intent.putExtra("userID", userID );
+                startActivity(intent);
+            }
+        });
     }
 }

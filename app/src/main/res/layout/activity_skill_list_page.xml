@@ -16,7 +16,7 @@
     <RelativeLayout
         android:id="@+id/button_view"
         android:layout_width="match_parent"
-        android:layout_height="150sp"
+        android:layout_height="200sp"
         android:background="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@id/recycler_view_skill_list"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15sp"
             android:text="Tamam"
-            android:textSize="20sp"/>
+            android:textSize="40sp"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
