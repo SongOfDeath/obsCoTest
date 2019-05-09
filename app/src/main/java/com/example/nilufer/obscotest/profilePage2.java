@@ -38,6 +38,7 @@ public class profilePage2 extends AppCompatActivity {
     String age;
     String email;
     String id;
+    String secondUserId;
     String name;
     String password;
     String title;
@@ -109,13 +110,14 @@ public class profilePage2 extends AppCompatActivity {
                 intent.putExtra("ID_FROM_LOGIN", id);
                 intent.putExtra("NAME_FROM_LOGIN", name);
                 intent.putExtra("PASSWORD_FROM_LOGIN", password);
+                intent.putExtra("secondUserID", secondUserId);
                 startActivity(intent);
             }
         });
     }
 
     private void sendGet() throws Exception {
-        String url = "http://obsco.me/obsco/api/v1.0/users/" + id;
+        String url = "http://obsco.me/obsco/api/v1.0/users/" + secondUserId;
         System.out.println("DEBUG POINT 1: ");
         //String url = "http://obsco.me/obsco/api/v1.0/users/12345671"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
 
@@ -155,13 +157,19 @@ public class profilePage2 extends AppCompatActivity {
 
         //UGETJSON ARR
 
-        id = userJSON.getString("id");
+        secondUserId = userJSON.getString("id");
         System.out.println("DEBUG POINT 6:" + id);
         name = userJSON.getString("name");
         email = userJSON.getString("email");
 
         TextView nameText = (TextView) findViewById(R.id.personnel_name);
         nameText.setText(name);
+
+        TextView titleText = (TextView) findViewById(R.id.first_trait);
+        title = userJSON.getString("title");
+        titleText.setText(title);
+
+
     }
 
     private void getSkillsResponse() throws Exception {
@@ -170,7 +178,7 @@ public class profilePage2 extends AppCompatActivity {
         //String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/dogancan"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
         //String url = "http://obsco.me/obsco/api/v1.0/addskill/androiddev";
         String url = "http://obsco.me/obsco/api/v1.0/skills/";
-        url = url + id;
+        url = url + secondUserId;
         //String url = "http://obsco.me/obsco/api/v1.0/reputation/12345671";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -219,7 +227,7 @@ public class profilePage2 extends AppCompatActivity {
 
         System.out.println("DEBUG POINT 1: ");
         String url = "http://obsco.me/obsco/api/v1.0/users/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
-        url = url + id;
+        url = url + secondUserId;
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         // optional default is GET
@@ -274,7 +282,7 @@ public class profilePage2 extends AppCompatActivity {
     private void getReputation() throws Exception {
 
         String url = "http://obsco.me/obsco/api/v1.0/reputation/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
-        url = url + id;
+        url = url + secondUserId;
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -309,6 +317,8 @@ public class profilePage2 extends AppCompatActivity {
         Double reputationValue = reader.getDouble("reputation");
         TextView reputationText = (TextView) findViewById(R.id.second_trait);
         reputationText.setText(reputationValue.toString() + " \nDAVRANIŞ PUANI");
+
+
     }
 
     public LinearLayout addSkillLayout(String s, int thisSkillId)
@@ -335,6 +345,7 @@ public class profilePage2 extends AppCompatActivity {
                 intent.putExtra("NAME_FROM_LOGIN", name);
                 intent.putExtra("PASSWORD_FROM_LOGIN", password);
                 intent.putExtra("SKILLID", tempSkillId);
+                intent.putExtra("secondUserID", secondUserId);
                 startActivity(intent);
 
             }
@@ -416,6 +427,8 @@ public class profilePage2 extends AppCompatActivity {
         id = getIntent().getStringExtra("ID_FROM_LOGIN");
         name = getIntent().getStringExtra("NAME_FROM_LOGIN");
         password = getIntent().getStringExtra("PASSWORD_FROM_LOGIN");
+        secondUserId = getIntent().getStringExtra("secondUserID");
+
         makeProfilePicCircular();
         InitializeCommentButton();
         new ConnectionTest().execute("");

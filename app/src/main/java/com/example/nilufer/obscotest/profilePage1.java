@@ -1,5 +1,6 @@
 package com.example.nilufer.obscotest;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -8,11 +9,15 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,16 +32,22 @@ import java.util.Map;
 import java.util.Random;
 
 public class profilePage1 extends AppCompatActivity {
-// MAHIR
+    // MAHIR
+    String idFromGroupPage;
+    String groupIdFromGroupPage;
     String age;
     String email;
     String id;
+    String secondUserId;
     String name;
     String password;
     String title;
-    JSONArray skillsArray;
+    Double skillLevel;
+    JSONArray skillsContainingArray;
     boolean isSuperuser;
 
+    private ImageView addCommentButton;
+    LinearLayout ll;
     private class ConnectionTest extends AsyncTask {
         @Override
         protected Object doInBackground(Object... arg0) {
@@ -45,6 +56,8 @@ public class profilePage1 extends AppCompatActivity {
                 System.out.println("Testing 1 - Send Http GET request");
                 getReputation();
                 sendGet();
+                //getUserData();
+                getSkillsResponse();
 
             } catch (Exception e) {
                 System.err.println("Oops!");
@@ -55,17 +68,59 @@ public class profilePage1 extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object o) {
-            addUserTraits();
+
+
+            ll.addView(makeTextView("İletişim: "+email));
+            for (int i=0; i<skillsContainingArray.length(); i++)
+            {
+                String skillName;
+                try {
+                    JSONObject testObject = (JSONObject) skillsContainingArray.get(i);
+                    skillName = testObject.getString("name");//skillsArray.getString(i);
+                    skillLevel = testObject.getDouble("value");
+                    int skillId = testObject.getInt("id");
+
+
+                    ll.addView( addSkillLayout( skillName, skillId ) );//THIS HAS TO BE ONLY SKILL NAME NOW // + "\n " + skillLevel) );
+                    ll.addView( makeStarsLayout() );
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            //addUserTraits();
             //Show the result obtained from doInBackground
         }
 
     }
 
-    private void sendGet() throws Exception {
+    public void InitializeCommentButton()
+    {
+        addCommentButton = (ImageView)findViewById(R.id.add_comment);
 
+        addCommentButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                //Open new page
+                Intent intent = new Intent("android.intent.action.ADDCOMMENTPAGE");
+                intent.putExtra("ID_FROM_LOGIN", id);
+                intent.putExtra("NAME_FROM_LOGIN", name);
+                intent.putExtra("PASSWORD_FROM_LOGIN", password);
+                //intent.putExtra("secondUserID", secondUserId);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void sendGet() throws Exception {
+        String url = "http://obsco.me/obsco/api/v1.0/users/" + id;
         System.out.println("DEBUG POINT 1: ");
-        String url = "http://obsco.me/obsco/api/v1.0/users/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
-        url = url + id;
+        //String url = "http://obsco.me/obsco/api/v1.0/users/12345671"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         System.out.println("DEBUG POINT 2: ");
@@ -85,11 +140,8 @@ public class profilePage1 extends AppCompatActivity {
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuffer response = new StringBuffer();
-        int cntTest1 = 0;
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
-            cntTest1++;
-            System.out.println(cntTest1);
         }
         in.close();
 
@@ -99,33 +151,137 @@ public class profilePage1 extends AppCompatActivity {
 
         JSONObject reader = new JSONObject(response.toString());
 
+        System.out.println("DEBUG POINT 5:");
+        JSONArray allContainingArray = reader.getJSONArray("users");
+        JSONObject userJSON  = (JSONObject)allContainingArray.get(0);// reader.getJSONObject("users");
+
+        //UGETJSON ARR
+
+        id = userJSON.getString("id");
+        System.out.println("DEBUG POINT 6:" + id);
+        name = userJSON.getString("name");
+        email = userJSON.getString("email");
+
+        TextView nameText = (TextView) findViewById(R.id.personnel_name);
+        nameText.setText(name);
+
+        TextView titleText = (TextView) findViewById(R.id.first_trait);
+        title = userJSON.getString("title");
+        titleText.setText(title);
+
+
+    }
+
+    private void getSkillsResponse() throws Exception {
+
+        System.out.println("DEBUG POINT 1: ");
+        //String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/dogancan"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        //String url = "http://obsco.me/obsco/api/v1.0/addskill/androiddev";
+        String url = "http://obsco.me/obsco/api/v1.0/skills/";
+        url = url + id;
+        //String url = "http://obsco.me/obsco/api/v1.0/reputation/12345671";
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        System.out.println("DEBUG POINT 2: ");
+        // optional default is GET
+        con.setRequestMethod("GET");
+        System.out.println("DEBUG POINT 3: ");
+        //add request header
+        //con.setRequestProperty("User-Agent",);
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+        int responseCode = con.getResponseCode();
+        System.out.println("DEBUG POINT 4: ");
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        //print result
+        System.out.println("RESPONSE: ");
+        System.out.println(response.toString());
+
+        JSONObject reader = new JSONObject(response.toString());
+
+        skillsContainingArray = reader.getJSONArray("skills");
+        JSONObject skillJSON  = (JSONObject)skillsContainingArray.get(1);
+        System.out.println(skillJSON.getString("name"));
+        System.out.println("DEB1: ");
+
+
+
+        //skillsArray = (JSONArray) userJSON.get("skills");
+        //System.out.println("LENGTHXD: ");
+        //System.out.println(skillsArray.length());
+    }
+
+    private void getUserData() throws Exception {
+
+        System.out.println("DEBUG POINT 1: ");
+        String url = "http://obsco.me/obsco/api/v1.0/users/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        url = url + id;
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        // optional default is GET
+        con.setRequestMethod("GET");
+        //add request header
+        //con.setRequestProperty("User-Agent",);
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        in.close();
+
+        //print result
+        System.out.println("RESPONSE: ");
+        System.out.println(response.toString());
+
+        JSONObject reader = new JSONObject(response.toString());
+/*
         //JSONObject userJSON  = reader.getJSONObject("users");
         JSONArray allContainingArray = reader.getJSONArray("users");
         JSONObject userJSON  = (JSONObject)allContainingArray.get(0);// reader.getJSONObject("users");
-        age = userJSON.getString("age");
+
         email = userJSON.getString("email");
-        id = userJSON.getString("id");
         name = userJSON.getString("name");
-        password = userJSON.getString("password");
-        title = userJSON.getString("title");
+*/
+        TextView nameText = (TextView) findViewById(R.id.personnel_name);
 
-        // getting phoneNumbers
-        skillsArray = (JSONArray) userJSON.get("skills");
-        System.out.println("JA LENGTH: ");
-        System.out.println(skillsArray.length());
-        //ja.getJSONObject(i)
-        // iterating phoneNumbers
+        //String text = "This is <font color='red'>red</font>. This is <font color='blue'>blue</font>.";
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        //    nameText.setText(Html.fromHtml(text,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+        //} else {
+        //nameText.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);
+        //}
 
-        System.out.println("AGE: ");
-        System.out.println(age);
 
+        //nameText.setText(name + " \nBEHAVIOR SCORE");
+
+    }
+
+    private void setNameAndEmail()
+    {
 
     }
 
     private void getReputation() throws Exception {
 
         String url = "http://obsco.me/obsco/api/v1.0/reputation/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
-        id = "12345671";
         url = url + id;
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -160,23 +316,77 @@ public class profilePage1 extends AppCompatActivity {
         JSONObject reader = new JSONObject(response.toString());
         Double reputationValue = reader.getDouble("reputation");
         TextView reputationText = (TextView) findViewById(R.id.second_trait);
-        reputationText.setText(reputationValue.toString());
+        reputationText.setText(reputationValue.toString() + " \nDAVRANIŞ PUANI");
+
+
     }
 
-    public LinearLayout addSkillLayout(String s)
+    public LinearLayout addSkillLayout(String s, int thisSkillId)
     {
         final LinearLayout newLayout = new LinearLayout(this);
         newLayout.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         newLayout.setOrientation(LinearLayout.HORIZONTAL);
+        //newLayout.setGravity(Gravity.);
+        newLayout.addView( makeImageView1(R.drawable.ball3,125) );
         newLayout.addView( makeTextView(s) );
+
+/*        final ImageView plusImage = makeImageView1(R.drawable.plus2, 200);
+        newLayout.addView( plusImage );
+        final int tempSkillId = thisSkillId;
+
+        plusImage.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                Intent intent = new Intent("android.intent.action.VOTESKILLPAGE");
+                intent.putExtra("ID_FROM_LOGIN", id);
+                intent.putExtra("NAME_FROM_LOGIN", name);
+                intent.putExtra("PASSWORD_FROM_LOGIN", password);
+                intent.putExtra("SKILLID", tempSkillId);
+                //intent.putExtra("secondUserID", secondUserId);
+                startActivity(intent);
+
+            }
+        });
+*/
         //newLayout.addView( makeTextView("! ! ! ! ! ! ! ! ! !"));
         return newLayout;
     }
 
+    public LinearLayout makeStarsLayout()
+    {
+        final LinearLayout newLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams newLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        newLayoutParams.leftMargin = 125;
+        newLayout.setLayoutParams(newLayoutParams);
+        newLayout.setOrientation(LinearLayout.HORIZONTAL);
+        //newLayout.setGravity(Gravity.CENTER);
+        for(int i=1; i<skillLevel; i++)
+        {
+            newLayout.addView( makeImageView1(R.drawable.bluestarnew2,50) );
+        }
+        newLayout.addView( makeTextView("   " + skillLevel.toString()) );
+        return newLayout;
+    }
+
+    public ImageView makeImageView1(int resourceName, int widthToUse)
+    {
+        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(widthToUse, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layoutParams.gravity=Gravity.CENTER;
+        ImageView newImage = new ImageView(this);
+        newImage.setImageResource(resourceName);
+        newImage.setLayoutParams(layoutParams);
+
+        return newImage;
+    }
     public TextView makeTextView(String s)
     {
         final TextView nameTextView = new TextView(this);
         nameTextView.setText(s);
+        nameTextView.setTextSize(20);
         nameTextView.setBackgroundColor( Color.argb(255,255,255,255) );
         nameTextView.setTextAppearance(this, R.style.Widget_AppCompat_Button_Borderless);
         nameTextView.setGravity(Gravity.CENTER);
@@ -185,108 +395,7 @@ public class profilePage1 extends AppCompatActivity {
         return nameTextView;
     }
 
-    public void addUserTraits()
-    {
 
-        LinearLayout ll = (LinearLayout)findViewById(R.id.texts_layout);
-        //LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        //ll.addView(myButton, lp);
-
-        ll.addView(makeTextView("email: "+email));
-        for (int i=0; i<skillsArray.length(); i++) {
-            JSONObject actor = null;
-            try {
-                JSONObject testObject = (JSONObject) skillsArray.get(i);
-                int skillId = testObject.getInt("id");//skillsArray.getString(i);
-                int skillLevel = testObject.getInt("value");
-                String skillName = "blank";
-                System.out.println(i);
-                System.out.println(skillId);
-                if (skillId == 1)
-                    skillName = "JAVA: ";
-                else if (skillId == 2)
-                    skillName = "C++: ";
-                else if (skillId == 3)
-                    skillName = "PROJECT MANAGEMENT: ";
-                else if (skillId == 4)
-                {
-                    skillName = "COMMUNICATION SKILL: ";
-                }
-                else if (skillId == 5)
-                {
-                    skillName = "C#: ";
-                }
-                else if (skillId == 6)
-                {
-                    skillName = "Python: ";
-                }
-                    else if (skillId == 7)
-                {
-                    skillName = "PHP: ";
-                }
-                else if (skillId == 8)
-                {
-                    skillName = "HTML: ";
-                }
-                else if (skillId == 9)
-                {
-                    skillName = "BACKEND PROGRAMMING: ";
-                }
-                else if(skillId == 10)
-                {
-                    skillName = "UI DESIGN: ";
-                }
-                ll.addView( addSkillLayout(skillName + skillLevel) );
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            //ll.addView( makeTextView( actor.getString() ) );
-        }
-        //ll.addView(makeTextView("age: "+age));
-        //ll.addView(makeTextView("title: "+title));
-
-        TextView personnelName = (TextView) findViewById(R.id.personnel_name);
-        personnelName.setText(name); //set text for text view
-        TextView firstTrait = (TextView) findViewById(R.id.first_trait);
-        firstTrait.setText("title: " + title); //set text for text view
-
-        /*
-        final int N = 5; // total number of textviews to add
-
-        final TextView[] myTextViews = new TextView[N]; // create an empty array;
-
-        for (int i = 0; i < N; i++)
-        {
-            // create a new textview
-            final TextView rowTextView = new TextView(this);
-
-            // set some properties of rowTextView or something
-            rowTextView.setText("Personel teknik yetenek #" + i);
-
-
-            Random rnd = new Random();
-            int randomColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-            rowTextView.setBackgroundColor( Color.argb(255,255,255,255) );
-            rowTextView.setTextAppearance(this, R.style.Widget_AppCompat_Button_Borderless);
-            rowTextView.setGravity(Gravity.CENTER);
-            rowTextView.setMinimumHeight(175);
-
-
-            //if we already have layout params
-            //ViewGroup.LayoutParams params = rowTextView.getLayoutParams();
-            //params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            //params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            //rowTextView.setLayoutParams(params);
-
-            // add the textview to the linearlayout
-            rowTextView.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            ll.addView(rowTextView);
-
-            // save a reference to the textview for later
-            myTextViews[i] = rowTextView;
-        }
-        */
-    }
 
     public void makeProfilePicCircular()
     {
@@ -313,11 +422,15 @@ public class profilePage1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page1);
-
+        ll = (LinearLayout)findViewById(R.id.texts_layout);
         /////
         id = getIntent().getStringExtra("ID_FROM_LOGIN");
+        name = getIntent().getStringExtra("NAME_FROM_LOGIN");
+        password = getIntent().getStringExtra("PASSWORD_FROM_LOGIN");
+        //secondUserId = getIntent().getStringExtra("secondUserID");
 
         makeProfilePicCircular();
+        InitializeCommentButton();
         new ConnectionTest().execute("");
         //addUserTraits();
     }

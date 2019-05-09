@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".voteSkillPage1">
+    tools:context=".profilePage2">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#4DC2FF"
-                android:text="Total Projects \n12"
+                android:text="OBSCO"
                 android:textColor="#FFFFFF" />
 
             <TextView

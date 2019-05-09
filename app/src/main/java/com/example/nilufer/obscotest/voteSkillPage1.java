@@ -68,10 +68,11 @@ public class voteSkillPage1 extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             //Open new page
 
-            Intent intent = new Intent("android.intent.action.HOMEPAGE1");
+            Intent intent = new Intent("android.intent.action.SECONDPROFILEPAGE");
             intent.putExtra("ID_FROM_LOGIN", id);
             intent.putExtra("NAME_FROM_LOGIN", name);
             intent.putExtra("PASSWORD_FROM_LOGIN", password);
+            intent.putExtra("secondUserID", secondUserId);
             startActivity(intent);
 
             //Show the result obtained from doInBackground
@@ -120,7 +121,7 @@ public class voteSkillPage1 extends AppCompatActivity {
         int responseCode = con.getResponseCode();
         System.out.println("DEBUG POINT 4: ");
         System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " + responseCode);
+        System.out.println("TATATA VOTE RESPONSE : " + responseCode);
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -257,7 +258,7 @@ public class voteSkillPage1 extends AppCompatActivity {
         id = getIntent().getStringExtra("ID_FROM_LOGIN");
         name = getIntent().getStringExtra("NAME_FROM_LOGIN");
         password = getIntent().getStringExtra("PASSWORD_FROM_LOGIN");
-
+        secondUserId = getIntent().getStringExtra("secondUserID");
         votedSkillId = getIntent().getIntExtra("SKILLID",0);
         ll.addView(makeStarsLayout(0));
         InitializeVoteButton();
