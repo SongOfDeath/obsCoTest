@@ -44,8 +44,10 @@ public class profilePage2 extends AppCompatActivity {
     String title;
     Double skillLevel;
     JSONArray skillsContainingArray;
+    JSONArray relationsContainingArray;
     boolean isSuperuser;
 
+    String groupID;
     private ImageView addCommentButton;
     LinearLayout ll;
     private class ConnectionTest extends AsyncTask {
@@ -58,6 +60,7 @@ public class profilePage2 extends AppCompatActivity {
                 sendGet();
                 //getUserData();
                 getSkillsResponse();
+                getGroupRelations();
 
             } catch (Exception e) {
                 System.err.println("Oops!");
@@ -84,9 +87,29 @@ public class profilePage2 extends AppCompatActivity {
                     ll.addView( addSkillLayout( skillName, skillId ) );//THIS HAS TO BE ONLY SKILL NAME NOW // + "\n " + skillLevel) );
                     ll.addView( makeStarsLayout() );
 
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+            }
+
+            for(int i = 0; i<relationsContainingArray.length(); i++)
+            {
+                try {
+                    JSONObject testObject = (JSONObject) relationsContainingArray.get(i);
+                    String tempS = testObject.getString("name");
+                    Double relationScore = testObject.getDouble("score");
+                    //addRelationLayout(tempS, relationScore);
+                    ll.addView( addRelationLayout(tempS, relationScore) );
+                    System.out.println(tempS);
+                    System.out.println(relationScore);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
             }
             //addUserTraits();
@@ -111,6 +134,7 @@ public class profilePage2 extends AppCompatActivity {
                 intent.putExtra("NAME_FROM_LOGIN", name);
                 intent.putExtra("PASSWORD_FROM_LOGIN", password);
                 intent.putExtra("secondUserID", secondUserId);
+                intent.putExtra("groupID", groupID);
                 startActivity(intent);
             }
         });
@@ -279,6 +303,62 @@ public class profilePage2 extends AppCompatActivity {
 
     }
 
+    private void getGroupRelations() throws Exception {
+
+        String url = "http://obsco.me/obsco/api/v1.0/grouprelations/" + secondUserId + "/" +  groupID; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
+        //url = url + secondUserId;
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        // optional default is GET
+        con.setRequestMethod("GET");
+
+        //add request header
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+        int responseCode = con.getResponseCode();
+
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        int cntTest1 = 0;
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+            cntTest1++;
+            System.out.println(cntTest1);
+        }
+        in.close();
+
+        //print result
+        System.out.println("GET GROUP DATAVE: ");
+        System.out.println(response.toString());
+
+
+        JSONObject reader = new JSONObject(response.toString());
+
+        System.out.println("DEBUG POINT 5:");
+        relationsContainingArray = reader.getJSONArray("relations");
+
+
+
+
+        //JSONObject userJSON  = (JSONObject)allContainingArray.get(0);
+
+
+        //skillName = testObject.getString("name");//skillsArray.getString(i);
+        // reader.getJSONObject("users");
+        /*
+        Double reputationValue = reader.getDouble("reputation");
+        TextView reputationText = (TextView) findViewById(R.id.second_trait);
+        reputationText.setText(reputationValue.toString() + " \nDAVRANIŞ PUANI");
+        */
+
+    }
+
     private void getReputation() throws Exception {
 
         String url = "http://obsco.me/obsco/api/v1.0/reputation/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
@@ -319,6 +399,20 @@ public class profilePage2 extends AppCompatActivity {
         reputationText.setText(reputationValue.toString() + " \nDAVRANIŞ PUANI");
 
 
+    }
+
+    public LinearLayout addRelationLayout(String s, Double score)
+    {
+        final LinearLayout newLayout = new LinearLayout(this);
+        newLayout.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        newLayout.setOrientation(LinearLayout.HORIZONTAL);
+        //newLayout.setGravity(Gravity.);
+        newLayout.addView( makeImageView1(R.drawable.ball3,125) );
+        newLayout.addView( makeTextView(s + " " + score) );
+
+
+        //newLayout.addView( makeTextView("! ! ! ! ! ! ! ! ! !"));
+        return newLayout;
     }
 
     public LinearLayout addSkillLayout(String s, int thisSkillId)
@@ -428,6 +522,7 @@ public class profilePage2 extends AppCompatActivity {
         name = getIntent().getStringExtra("NAME_FROM_LOGIN");
         password = getIntent().getStringExtra("PASSWORD_FROM_LOGIN");
         secondUserId = getIntent().getStringExtra("secondUserID");
+        groupID = getIntent().getStringExtra("groupID");
 
         makeProfilePicCircular();
         InitializeCommentButton();

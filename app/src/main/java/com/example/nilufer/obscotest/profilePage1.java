@@ -10,6 +10,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
+
+
 
 public class profilePage1 extends AppCompatActivity {
     // MAHIR
@@ -48,6 +52,26 @@ public class profilePage1 extends AppCompatActivity {
 
     private ImageView addCommentButton;
     LinearLayout ll;
+    ImageView bmImage;
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap bmp = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                bmp = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
     private class ConnectionTest extends AsyncTask {
         @Override
         protected Object doInBackground(Object... arg0) {
@@ -95,26 +119,7 @@ public class profilePage1 extends AppCompatActivity {
 
     }
 
-    public void InitializeCommentButton()
-    {
-        addCommentButton = (ImageView)findViewById(R.id.add_comment);
 
-        addCommentButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-                //Open new page
-                Intent intent = new Intent("android.intent.action.ADDCOMMENTPAGE");
-                intent.putExtra("ID_FROM_LOGIN", id);
-                intent.putExtra("NAME_FROM_LOGIN", name);
-                intent.putExtra("PASSWORD_FROM_LOGIN", password);
-                //intent.putExtra("secondUserID", secondUserId);
-                startActivity(intent);
-            }
-        });
-    }
 
     private void sendGet() throws Exception {
         String url = "http://obsco.me/obsco/api/v1.0/users/" + id;
@@ -222,6 +227,7 @@ public class profilePage1 extends AppCompatActivity {
         //System.out.println("LENGTHXD: ");
         //System.out.println(skillsArray.length());
     }
+
 
     private void getUserData() throws Exception {
 
@@ -430,8 +436,15 @@ public class profilePage1 extends AppCompatActivity {
         //secondUserId = getIntent().getStringExtra("secondUserID");
 
         makeProfilePicCircular();
-        InitializeCommentButton();
+
         new ConnectionTest().execute("");
+
+
+        bmImage = findViewById(R.id.profile_pic);
+
+
+            new DownloadImageTask().execute("http://obsco.me/obsco/api/v1.0/" + id);
+
         //addUserTraits();
     }
 }
