@@ -53,10 +53,7 @@ public class profilePage2 extends AppCompatActivity {
 
             try{
                 System.out.println("Testing 1 - Send Http GET request");
-                getReputation();
                 sendGet();
-                //getUserData();
-                getSkillsResponse();
 
             } catch (Exception e) {
                 System.err.println("Oops!");
@@ -163,153 +160,6 @@ public class profilePage2 extends AppCompatActivity {
         nameText.setText(name);
     }
 
-    private void getSkillsResponse() throws Exception {
-
-        System.out.println("DEBUG POINT 1: ");
-        //String url = "http://obsco.me/obsco/api/v1.0/skills/addskill/dogancan"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
-        //String url = "http://obsco.me/obsco/api/v1.0/addskill/androiddev";
-        String url = "http://obsco.me/obsco/api/v1.0/skills/";
-        url = url + id;
-        //String url = "http://obsco.me/obsco/api/v1.0/reputation/12345671";
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        System.out.println("DEBUG POINT 2: ");
-        // optional default is GET
-        con.setRequestMethod("GET");
-        System.out.println("DEBUG POINT 3: ");
-        //add request header
-        //con.setRequestProperty("User-Agent",);
-        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-
-        int responseCode = con.getResponseCode();
-        System.out.println("DEBUG POINT 4: ");
-        System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " + responseCode);
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-
-        //print result
-        System.out.println("RESPONSE: ");
-        System.out.println(response.toString());
-
-        JSONObject reader = new JSONObject(response.toString());
-
-        skillsContainingArray = reader.getJSONArray("skills");
-        JSONObject skillJSON  = (JSONObject)skillsContainingArray.get(1);
-        System.out.println(skillJSON.getString("name"));
-        System.out.println("DEB1: ");
-
-
-
-        //skillsArray = (JSONArray) userJSON.get("skills");
-        //System.out.println("LENGTHXD: ");
-        //System.out.println(skillsArray.length());
-    }
-
-    private void getUserData() throws Exception {
-
-        System.out.println("DEBUG POINT 1: ");
-        String url = "http://obsco.me/obsco/api/v1.0/users/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
-        url = url + id;
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        // optional default is GET
-        con.setRequestMethod("GET");
-        //add request header
-        //con.setRequestProperty("User-Agent",);
-        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-
-        int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " + responseCode);
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        in.close();
-
-        //print result
-        System.out.println("RESPONSE: ");
-        System.out.println(response.toString());
-
-        JSONObject reader = new JSONObject(response.toString());
-/*
-        //JSONObject userJSON  = reader.getJSONObject("users");
-        JSONArray allContainingArray = reader.getJSONArray("users");
-        JSONObject userJSON  = (JSONObject)allContainingArray.get(0);// reader.getJSONObject("users");
-
-        email = userJSON.getString("email");
-        name = userJSON.getString("name");
-*/
-        TextView nameText = (TextView) findViewById(R.id.personnel_name);
-
-        //String text = "This is <font color='red'>red</font>. This is <font color='blue'>blue</font>.";
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        //    nameText.setText(Html.fromHtml(text,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
-        //} else {
-            //nameText.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);
-        //}
-
-
-        //nameText.setText(name + " \nBEHAVIOR SCORE");
-
-    }
-
-    private void setNameAndEmail()
-    {
-
-    }
-
-    private void getReputation() throws Exception {
-
-        String url = "http://obsco.me/obsco/api/v1.0/reputation/"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
-        url = url + id;
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-        // optional default is GET
-        con.setRequestMethod("GET");
-
-        //add request header
-        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-
-        int responseCode = con.getResponseCode();
-
-        System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " + responseCode);
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-        int cntTest1 = 0;
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-            cntTest1++;
-            System.out.println(cntTest1);
-        }
-        in.close();
-
-        //print result
-        System.out.println("RESPONSE: ");
-        System.out.println(response.toString());
-
-        JSONObject reader = new JSONObject(response.toString());
-        Double reputationValue = reader.getDouble("reputation");
-        TextView reputationText = (TextView) findViewById(R.id.second_trait);
-        reputationText.setText(reputationValue.toString() + " \nDAVRANIŞ PUANI");
-    }
-
     public LinearLayout addSkillLayout(String s)
     {
         final LinearLayout newLayout = new LinearLayout(this);
@@ -382,23 +232,6 @@ public class profilePage2 extends AppCompatActivity {
         //nameTextView.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         return nameTextView;
     }
-
-
-
-    public void makeProfilePicCircular()
-    {
-        ImageView profilePic=(ImageView)findViewById(R.id.profile_pic);
-
-//get bitmap of the image
-        Bitmap imageBitmap= BitmapFactory.decodeResource(getResources(),  R.drawable.bertcase);
-        RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
-
-//setting radius
-        //roundedBitmapDrawable.setCornerRadius(50.0f);
-        roundedBitmapDrawable.setCircular(true);
-        roundedBitmapDrawable.setAntiAlias(true);
-        profilePic.setImageDrawable(roundedBitmapDrawable);
-    }
 // MAHIR
 
 
@@ -409,14 +242,14 @@ public class profilePage2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_page2);
+        setContentView(R.layout.activity_vote_skill_page1);
         ll = (LinearLayout)findViewById(R.id.texts_layout);
         /////
         id = getIntent().getStringExtra("ID_FROM_LOGIN");
         name = getIntent().getStringExtra("NAME_FROM_LOGIN");
         password = getIntent().getStringExtra("PASSWORD_FROM_LOGIN");
-        makeProfilePicCircular();
-        InitializeCommentButton();
+
+
         new ConnectionTest().execute("");
         //addUserTraits();
     }

@@ -55,7 +55,7 @@ public class addCommentPage1 extends AppCompatActivity {
             intent.putExtra("NAME_FROM_LOGIN", name);
             intent.putExtra("PASSWORD_FROM_LOGIN", password);
             startActivity(intent);
-            
+
             //Show the result obtained from doInBackground
         }
 

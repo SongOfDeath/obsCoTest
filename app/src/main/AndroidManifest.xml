@@ -27,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".homeActivity1">
             <intent-filter>
                 <action android:name="android.intent.action.HOMEPAGE1" />
@@ -35,7 +34,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".profilePage1">
             <intent-filter>
                 <action android:name="android.intent.action.PROFILEPAGE" />
@@ -43,7 +41,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".profilePage2">
             <intent-filter>
                 <action android:name="android.intent.action.SECONDPROFILEPAGE" />
@@ -60,6 +57,14 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".voteSkillPage1">
+            <intent-filter>
+                <action android:name="android.intent.action.VOTESKILLPAGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".homeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -71,6 +76,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".GroupPage">
             <intent-filter>
                 <action android:name="android.intent.action.GROUP" />
