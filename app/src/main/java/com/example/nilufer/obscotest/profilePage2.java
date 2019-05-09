@@ -11,10 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +44,8 @@ public class profilePage2 extends AppCompatActivity {
     Double skillLevel;
     JSONArray skillsContainingArray;
     boolean isSuperuser;
+
+    private ImageView addCommentButton;
 
     private class ConnectionTest extends AsyncTask {
         @Override
@@ -86,6 +91,26 @@ public class profilePage2 extends AppCompatActivity {
             //Show the result obtained from doInBackground
         }
 
+    }
+
+    public void InitializeCommentButton()
+    {
+        addCommentButton = (ImageView)findViewById(R.id.add_comment);
+
+        addCommentButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                //Open new page
+                Intent intent = new Intent("android.intent.action.ADDCOMMENTPAGE");
+                intent.putExtra("ID_FROM_LOGIN", id);
+                intent.putExtra("NAME_FROM_LOGIN", name);
+                intent.putExtra("PASSWORD_FROM_LOGIN", password);
+                startActivity(intent);
+            }
+        });
     }
 
     private void sendGet() throws Exception {
@@ -369,9 +394,11 @@ public class profilePage2 extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page2);
 
         /////
-        idFromGroupPage = "21400537";
-        id = idFromGroupPage;
+        id = getIntent().getStringExtra("ID_FROM_LOGIN");
+        name = getIntent().getStringExtra("NAME_FROM_LOGIN");
+        password = getIntent().getStringExtra("PASSWORD_FROM_LOGIN");
         makeProfilePicCircular();
+        InitializeCommentButton();
         new ConnectionTest().execute("");
         //addUserTraits();
     }

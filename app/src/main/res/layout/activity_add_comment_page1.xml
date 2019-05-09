@@ -4,22 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbg3"
-    tools:context=".MainActivity">
-<!--
+    android:background="#606060"
+    tools:context=".addCommentPage1">
+    <!--
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="100dp"
+            android:contentDescription="Login"
+
+
+            android:src="@drawable/personelgirisi"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+    -->
+
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="100dp"
-        android:contentDescription="Login"
+        android:id="@+id/viewIma"
+
+        android:layout_width="422dp"
+        android:layout_height="672dp"
 
 
-        android:src="@drawable/personelgirisi"
+        android:src="@drawable/meetingfikirler3"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
--->
+        app:layout_constraintVertical_bias="0.491" />
+
     <EditText
         android:id="@+id/password1"
         android:layout_width="168dp"
@@ -28,49 +45,47 @@
         android:ems="10"
         android:inputType="textPassword"
         android:singleLine="true"
-        android:text="cokguclusifre"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="banaismailde"
+        app:layout_constraintBottom_toBottomOf="@id/viewIma"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.477"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.612" />
+        app:layout_constraintTop_toTopOf="@id/viewIma"
+        app:layout_constraintVertical_bias="0.913" />
 
     <ImageButton
-        android:id="@+id/button"
+        android:id="@+id/tamamlabutton"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="357dp"
-        android:layout_height="136dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_width="276dp"
+        android:layout_height="54dp"
 
-        android:src="@drawable/giris2"
         android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/viewIma"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintTop_toTopOf="@id/viewIma"
+        app:layout_constraintVertical_bias="0.841" />
 
     <EditText
-        android:id="@+id/kullaniciadi1"
-        android:layout_width="164dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginLeft="116dp"
+        android:id="@+id/sentimentText"
+        android:layout_width="265dp"
+        android:layout_height="329dp"
+
+
         android:background="@android:color/transparent"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-
-        android:text="12345671"
+        android:gravity="start"
+        android:inputType="text"
+        android:text="Bu sayfada fikirlerinizi belirtin lutfen"
+        android:textAlignment="viewStart"
         android:textColor="@android:color/darker_gray"
         android:textSize="15dip"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.532" />
+        app:layout_constraintVertical_bias="0.527" />
     <!--
             android:layout_width="386dp"
         android:layout_height="520dp"

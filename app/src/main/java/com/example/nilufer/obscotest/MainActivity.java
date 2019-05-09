@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent("android.intent.action.HOMEPAGE1");
                         intent.putExtra("ID_FROM_LOGIN", id);
                         intent.putExtra("NAME_FROM_LOGIN", name);
+                        intent.putExtra("PASSWORD_FROM_LOGIN", password);
                         startActivity(intent);
                 }
 
