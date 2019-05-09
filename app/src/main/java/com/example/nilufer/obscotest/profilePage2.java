@@ -77,9 +77,10 @@ public class profilePage2 extends AppCompatActivity {
                     JSONObject testObject = (JSONObject) skillsContainingArray.get(i);
                     skillName = testObject.getString("name");//skillsArray.getString(i);
                     skillLevel = testObject.getDouble("value");
+                    int skillId = testObject.getInt("id");
 
 
-                    ll.addView( addSkillLayout( skillName ) );//THIS HAS TO BE ONLY SKILL NAME NOW // + "\n " + skillLevel) );
+                    ll.addView( addSkillLayout( skillName, skillId ) );//THIS HAS TO BE ONLY SKILL NAME NOW // + "\n " + skillLevel) );
                     ll.addView( makeStarsLayout() );
 
                 } catch (JSONException e) {
@@ -310,7 +311,7 @@ public class profilePage2 extends AppCompatActivity {
         reputationText.setText(reputationValue.toString() + " \nDAVRANIŞ PUANI");
     }
 
-    public LinearLayout addSkillLayout(String s)
+    public LinearLayout addSkillLayout(String s, int thisSkillId)
     {
         final LinearLayout newLayout = new LinearLayout(this);
         newLayout.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -321,8 +322,8 @@ public class profilePage2 extends AppCompatActivity {
 
         final ImageView plusImage = makeImageView1(R.drawable.plus2, 200);
         newLayout.addView( plusImage );
+        final int tempSkillId = thisSkillId;
 
-        final String skillN = s;
         plusImage.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -333,7 +334,7 @@ public class profilePage2 extends AppCompatActivity {
                 intent.putExtra("ID_FROM_LOGIN", id);
                 intent.putExtra("NAME_FROM_LOGIN", name);
                 intent.putExtra("PASSWORD_FROM_LOGIN", password);
-                intent.putExtra("SKILL_NAME_FROM_PROFILE", skillN);
+                intent.putExtra("SKILLID", tempSkillId);
                 startActivity(intent);
 
             }

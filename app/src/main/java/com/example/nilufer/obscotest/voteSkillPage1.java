@@ -47,6 +47,9 @@ public class voteSkillPage1 extends AppCompatActivity {
 
     private ImageView voteButton;
     LinearLayout ll;
+    int votedValue = 0;
+    int votedSkillId = 0;
+    String secondUserId;
     private class ConnectionTest extends AsyncTask {
         @Override
         protected Object doInBackground(Object... arg0) {
@@ -61,30 +64,16 @@ public class voteSkillPage1 extends AppCompatActivity {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Object o) {
+            //Open new page
 
+            Intent intent = new Intent("android.intent.action.HOMEPAGE1");
+            intent.putExtra("ID_FROM_LOGIN", id);
+            intent.putExtra("NAME_FROM_LOGIN", name);
+            intent.putExtra("PASSWORD_FROM_LOGIN", password);
+            startActivity(intent);
 
-            ll.addView(makeTextView("İletişim: "+email));
-            for (int i=0; i<skillsContainingArray.length(); i++)
-            {
-                String skillName;
-                try {
-                    JSONObject testObject = (JSONObject) skillsContainingArray.get(i);
-                    skillName = testObject.getString("name");//skillsArray.getString(i);
-                    skillLevel = testObject.getDouble("value");
-
-
-                    //ll.addView( addSkillLayout( skillName ) );//THIS HAS TO BE ONLY SKILL NAME NOW // + "\n " + skillLevel) );
-                    ll.addView( makeStarsLayout(0) );
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            //addUserTraits();
             //Show the result obtained from doInBackground
         }
 
@@ -100,6 +89,7 @@ public class voteSkillPage1 extends AppCompatActivity {
             public void onClick(View v)
             {
                 new ConnectionTest().execute("");
+
                 //Open new page
                 /*
                 Intent intent = new Intent("android.intent.action.ADDCOMMENTPAGE");
@@ -113,7 +103,7 @@ public class voteSkillPage1 extends AppCompatActivity {
     }
 
     private void sendGet() throws Exception {
-        String url = "http://obsco.me/obsco/api/v1.0/users/" + id;
+        String url = "http://obsco.me/obsco/api/v1.0/voteskill/" + secondUserId + "/" + votedSkillId + "/" + votedValue;
         System.out.println("DEBUG POINT 1: ");
         //String url = "http://obsco.me/obsco/api/v1.0/users/12345671"; //"http://127.0.0.1:5000/obsco/api/v1.0/users";
 
@@ -140,7 +130,7 @@ public class voteSkillPage1 extends AppCompatActivity {
             response.append(inputLine);
         }
         in.close();
-
+/*
         //print result
         System.out.println("RESPONSE: ");
         System.out.println(response.toString());
@@ -160,6 +150,7 @@ public class voteSkillPage1 extends AppCompatActivity {
 
         TextView nameText = (TextView) findViewById(R.id.personnel_name);
         nameText.setText(name);
+        */
     }
 
 /*
@@ -201,7 +192,6 @@ public class voteSkillPage1 extends AppCompatActivity {
         final LinearLayout newLayout = new LinearLayout(this);
         LinearLayout.LayoutParams newLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        newLayoutParams.leftMargin = 125;
         newLayout.setLayoutParams(newLayoutParams);
         newLayout.setOrientation(LinearLayout.HORIZONTAL);
         //newLayout.setGravity(Gravity.CENTER);
@@ -232,7 +222,9 @@ public class voteSkillPage1 extends AppCompatActivity {
             public void onClick(View v)
             {
                 ll.removeAllViews();
-                ll.addView( makeStarsLayout(newImage.getId()) );
+                votedValue = newImage.getId();
+                votedValue = votedValue + 1;
+                ll.addView( makeStarsLayout(votedValue) );
             }
         });
         return newImage;
@@ -266,9 +258,11 @@ public class voteSkillPage1 extends AppCompatActivity {
         name = getIntent().getStringExtra("NAME_FROM_LOGIN");
         password = getIntent().getStringExtra("PASSWORD_FROM_LOGIN");
 
+        votedSkillId = getIntent().getIntExtra("SKILLID",0);
+        ll.addView(makeStarsLayout(0));
         InitializeVoteButton();
 
-        ll.addView(makeStarsLayout(0));
+
 
         //addUserTraits();
     }
