@@ -4,29 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GroupPage">
+    tools:context=".CreateGroupPage">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/recycler_view_new_group"
         android:layout_width="match_parent"
-        android:layout_height="600sp"
+        android:layout_height="550sp"
         app:layout_constraintTop_toTopOf="parent">
     </android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
-        android:id="@+id/button_view"
+        android:id="@+id/view2"
         android:layout_width="match_parent"
-        android:layout_height="150sp"
+        android:layout_height="200sp"
         android:background="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view_new_group"
         app:layout_constraintBottom_toBottomOf="parent">
+        <EditText
+            android:id="@+id/group_name_input"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="text"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/button_create_group"/>
         <Button
-            android:id="@+id/button_new_group"
+            android:id="@+id/button_create_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15sp"
-            android:text="Yeni Grup"
+            android:layout_marginTop="60sp"
+            android:text="Grup Oluştur"
             android:textSize="20sp"/>
     </RelativeLayout>
 

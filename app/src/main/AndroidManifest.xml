@@ -34,10 +34,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".profilePage1">
             <intent-filter>
                 <action android:name="android.intent.action.PROFILEPAGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -45,7 +45,6 @@
         <activity android:name=".profilePage2">
             <intent-filter>
                 <action android:name="android.intent.action.SECONDPROFILEPAGE" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -71,6 +70,20 @@
         <activity android:name=".MemberList">
             <intent-filter>
                 <action android:name="android.intent.action.ML" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".CreateGroupPage">
+            <intent-filter>
+                <action android:name="android.intent.action.CREATEGROUP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".SkillListPage">
+            <intent-filter>
+                <action android:name="android.intent.action.SKILLLIST" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

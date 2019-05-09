@@ -19,20 +19,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class GroupPage extends AppCompatActivity {
+public class SkillListPage extends AppCompatActivity {
 
-    private static final String TAG = "RecycleViewAdapter";
-    private ArrayList<String> groupIDs = new ArrayList<>();
-    private ArrayList<String> groupNames = new ArrayList<>();
+    private static final String TAG = "RecycleViewAdapterSL";
+    private ArrayList<String> skillIDs = new ArrayList<>();
+    private ArrayList<String> skillNames = new ArrayList<>();
+    private ArrayList<Boolean> checkBoxes = new ArrayList<>();
     private String userID;
 
-    private class groupPageConnect extends AsyncTask {
+    private ArrayList<String> skillIDsOutput = new ArrayList<>();
+
+    private class skillListConnect extends AsyncTask {
         @Override
         protected Object doInBackground(Object... arg0) {
 
             try{
                 System.out.println("Testing 1 - Send Http GET request");
-                getGroups();
+                getSkills();
 
             } catch (Exception e) {
                 System.err.println("Oops!");
@@ -45,15 +48,14 @@ public class GroupPage extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             //call what you want to update
             initRecyclerView();
-            initNewGroupButton();
+            initConfirmButton();
             // dismiss progress dialog here
             // into onPostExecute() but that is upto you
         }
     }
 
-    private void getGroups() throws Exception{
-
-        String url = "http://obsco.me/obsco/api/v1.0/users/" + userID;
+    private void getSkills() throws Exception{
+        String url = "http://obsco.me/obsco/api/v1.0/skilllist";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
@@ -71,75 +73,69 @@ public class GroupPage extends AppCompatActivity {
         in.close();
 
         JSONObject reader = new JSONObject(response.toString());
-        JSONArray allContainingArray = reader.getJSONArray("users");
-        JSONObject userJSON  = (JSONObject) allContainingArray.get(0);
-        JSONArray temp = userJSON.getJSONArray("groups");
+        JSONArray readerArray = reader.getJSONArray("skills");
+        JSONObject temp;
 
-        for (int x = 0; x < temp.length(); x++){
-            groupIDs.add(temp.getJSONObject(x).getString("id"));
-            url = "http://obsco.me/obsco/api/v1.0/groupname/" + groupIDs.get(x);
-            obj = new URL(url);
-            con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
-
-            responseCode = con.getResponseCode();
-            System.out.println("Response Code  for IDs: " + responseCode);
-
-            in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            reader = new JSONObject(response.toString());
-            groupNames.add(reader.getString("name"));
+        for (int x = 0; x < readerArray.length(); x++) {
+            temp = readerArray.getJSONObject(x);
+            System.out.println(temp.getString("id"));
+            System.out.println(temp.getString("name"));
+            skillIDs.add(temp.getString("id"));
+            skillNames.add(temp.getString("name"));
+            checkBoxes.add(false);
         }
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_page);
+        setContentView(R.layout.activity_skill_list_page);
         Log.d(TAG, "started");
         try {
-            groupPageInit();
+            skillListInit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void groupPageInit() throws Exception{
+    private void skillListInit() throws Exception{
         Intent intent = getIntent();
-        userID = intent.getStringExtra("ID_FROM_LOGIN");
-        new groupPageConnect().execute();
-        //initRecyclerView();
+        userID = intent.getStringExtra("userID");
+        new skillListConnect().execute();
     }
 
     private void initRecyclerView(){
         Log.d(TAG, "initializingRecyclerView");
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter( this, groupIDs, groupNames);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view_skill_list);
+        RecyclerViewAdapterSkillList adapter = new RecyclerViewAdapterSkillList( this, skillNames, checkBoxes);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager( new LinearLayoutManager( this));
+
     }
 
-    private void initNewGroupButton(){
+    private void initConfirmButton() {
         Log.d(TAG, "initializingCreateGroupButton");
-        Button createGroup = findViewById(R.id.button_new_group);
-        createGroup.setOnClickListener(new View.OnClickListener()
+        Button confirmSkill = findViewById(R.id.button_confirm_skills);
+        confirmSkill.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                for ( int x= 0; x < skillIDs.size(); x++){
+                    if ( checkBoxes.get(x)) {
+                        System.out.println(skillIDs.get(x));
+                        skillIDsOutput.add(skillIDs.get(x));
+                    }
+                }
                 //Open new page
-                Intent intent = new Intent("android.intent.action.SKILLLIST");
+                Intent intent = new Intent("android.intent.action.CREATEGROUP");
                 intent.putExtra("userID", userID );
+                intent.putExtra("skillIDs", skillIDsOutput );
                 startActivity(intent);
             }
         });
+
     }
+
 }
