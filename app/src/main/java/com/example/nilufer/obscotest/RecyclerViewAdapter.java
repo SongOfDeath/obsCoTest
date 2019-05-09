@@ -20,11 +20,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private ArrayList<String> groupIDs;
     private ArrayList<String> groupNames;
+    private String userID;
+    private String password;
+    private String userName;
     private Context mContext;
 
-    public RecyclerViewAdapter(Context mContext, ArrayList<String> groupIDs, ArrayList<String> groupNames) {
+    public RecyclerViewAdapter(Context mContext, ArrayList<String> groupIDs, ArrayList<String> groupNames,
+                               String userID, String password, String userName) {
         this.groupIDs = groupIDs;
         this.groupNames = groupNames;
+        this.userID = userID;
+        this.password = password;
+        this.userName = userName;
         this.mContext = mContext;
     }
 
@@ -45,6 +52,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 //Open new page
                 Intent intent = new Intent("android.intent.action.ML");
                 intent.putExtra("groupID", holder.groupID);
+                intent.putExtra("userID", userID);
+                intent.putExtra("userName", userName);
+                intent.putExtra("password", password);
                 mContext.startActivity(intent);
             }
         });

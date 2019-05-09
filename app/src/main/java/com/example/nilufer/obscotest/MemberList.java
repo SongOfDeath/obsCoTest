@@ -24,6 +24,9 @@ public class MemberList extends AppCompatActivity {
     private ArrayList<String> memberIDs = new ArrayList<>();
     private ArrayList<String> memberNames = new ArrayList<>();
     private String groupID;
+    private String userID;
+    private String password;
+    private String userName;
 
     private class memberListConnect extends AsyncTask {
         @Override
@@ -96,6 +99,9 @@ public class MemberList extends AppCompatActivity {
     private void memberListInit() throws Exception{
         Intent intent = getIntent();
         groupID = intent.getStringExtra("groupID");
+        userID = intent.getStringExtra("userID");
+        password = intent.getStringExtra("password");
+        userName = intent.getStringExtra("userName");
         new memberListConnect().execute();
         //initRecyclerView();
     }
@@ -103,7 +109,8 @@ public class MemberList extends AppCompatActivity {
     private void initRecyclerView(){
         Log.d(TAG, "initializingRecyclerView");
         RecyclerView recyclerView = findViewById(R.id.recycler_view_members);
-        RecyclerViewAdapterMembers adapter = new RecyclerViewAdapterMembers( this, memberIDs, memberNames);
+        RecyclerViewAdapterMembers adapter = new RecyclerViewAdapterMembers( this, memberIDs, memberNames,
+                groupID, userID, userName, password);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager( new LinearLayoutManager( this));
     }

@@ -25,6 +25,8 @@ public class GroupPage extends AppCompatActivity {
     private ArrayList<String> groupIDs = new ArrayList<>();
     private ArrayList<String> groupNames = new ArrayList<>();
     private String userID;
+    private String password;
+    private String userName;
 
     private class groupPageConnect extends AsyncTask {
         @Override
@@ -115,6 +117,8 @@ public class GroupPage extends AppCompatActivity {
     private void groupPageInit() throws Exception{
         Intent intent = getIntent();
         userID = intent.getStringExtra("ID_FROM_LOGIN");
+        password = intent.getStringExtra("PASSWORD_FROM_LOGIN");
+        userName = intent.getStringExtra("NAME_FROM_LOGIN");
         new groupPageConnect().execute();
         //initRecyclerView();
     }
@@ -122,7 +126,7 @@ public class GroupPage extends AppCompatActivity {
     private void initRecyclerView(){
         Log.d(TAG, "initializingRecyclerView");
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter( this, groupIDs, groupNames);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter( this, groupIDs, groupNames, userID, password, userName);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager( new LinearLayoutManager( this));
     }
